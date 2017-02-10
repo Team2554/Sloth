@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2554.robot.subsystems;
 
 import org.usfirst.frc.team2554.robot.Robot;
-import org.usfirst.frc.team2554.robot.commands.DriveTrainDefault;
 import org.usfirst.frc.team2554.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -17,7 +16,7 @@ public class DriveTrain extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new DriveTrainDefault());
+		stop();
 	}
 	public void drive(double x, double y, double rotation){
 		myRobot.mecanumDrive_Cartesian(x, y, rotation, Robot.gyro.getAngle());

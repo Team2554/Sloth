@@ -12,7 +12,10 @@ import org.usfirst.frc.team2554.robot.commands.DriveTrainDefault;
 public class OI {
 	
 	//Controller Ports
-	public Joystick controller = new Joystick(0);
+		public Joystick controller = new Joystick(0);
+	//Axis
+		final public int lyAxis = 1;
+		final public int ryAxis = 5;
 	//Mapping of the Axis on the Joystick
 		/*
 		 1 is the L Y Axis
