@@ -27,7 +27,9 @@ public class OI {
 		final public int stickLeftY = 1;
 		final public int stickRightX = 4;
 		final public int stickRightY = 5;
-		
+	//DriveTrain Victor Ports
+		final static int driveTrain[] = {0,1,3,4};
+
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
