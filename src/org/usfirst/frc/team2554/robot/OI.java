@@ -1,14 +1,30 @@
 package org.usfirst.frc.team2554.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 
-import org.usfirst.frc.team2554.robot.commands.ExampleCommand;
+import org.usfirst.frc.team2554.robot.commands.DriveTrainDefault;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	
+	//Controller Ports
+	public Joystick controller = new Joystick(0);
+	//Mapping of the Axis on the Joystick
+		/*
+		 1 is the L Y Axis
+		 2 is L Trigger
+		 3 is R Trigger
+		 5 is the R Y Axis
+		 */
+		final public int stickLeftX = 0;
+		final public int stickLeftY = 1;
+		final public int stickRightX = 4;
+		final public int stickRightY = 5;
+		
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
