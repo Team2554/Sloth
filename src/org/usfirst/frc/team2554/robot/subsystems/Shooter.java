@@ -18,8 +18,10 @@ public class Shooter extends PIDSubsystem {
         // setSetpoint() -  Sets where the PID controller should move the system
         //                  to
         // enable() - Enables the PID controller.
-    	super(0,0,0);
-    	enable();
+    	super("Shooter",0,0,0);
+    	setAbsoluteTolerance(0.01);
+    	//Requires range. One of the boundaries should be 0.
+    	setOutputRange(-1,1);
     }
 
     public void initDefaultCommand() {
@@ -52,5 +54,14 @@ public class Shooter extends PIDSubsystem {
     public void stop(){
     	shooterL.set(0);
     	shooterR.set(0);
+    }
+    public void enablePID(){
+    	enable();
+    }
+    public void disablePID(){
+    	disable();
+    }
+    public boolean isTarget(){
+    	return onTarget();
     }
 }
