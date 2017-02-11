@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2554.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -24,5 +25,9 @@ public class ShootingGroup extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+    	addParallel(new SpinHopper());
+    	//Change delay constant
+    	Timer.delay(1);
+    	addParallel(new SpinShooter());
     }
 }

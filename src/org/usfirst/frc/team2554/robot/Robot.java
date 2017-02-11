@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
+import org.usfirst.frc.team2554.robot.commands.*;
 import org.usfirst.frc.team2554.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -26,6 +26,8 @@ public class Robot extends IterativeRobot {
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	public static Hopper hopper = new Hopper();
 	public static Shooter shooter = new Shooter();
+	public static Intake intake = new Intake();
+	public static Climber climber = new Climber();
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -36,6 +38,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		oi.climbButton.whileHeld(new ClimbUp());
 	//	chooser.addDefault("Default Auto", new DriveTrainDefault());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);

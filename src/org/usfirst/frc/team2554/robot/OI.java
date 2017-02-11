@@ -2,6 +2,7 @@ package org.usfirst.frc.team2554.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 
 /**
@@ -26,9 +27,9 @@ public class OI {
 		final public int stickLeftY = 1;
 		final public int stickRightX = 4;
 		final public int stickRightY = 5;
-	//DriveTrain Victor Ports
-		final static int driveTrain[] = {0,1,3,4};
-
+		//Buttons
+		final private int climb = 1;
+		Button climbButton = new JoystickButton(controller, climb);
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.

@@ -22,6 +22,8 @@ public class Shooter extends PIDSubsystem {
     	setAbsoluteTolerance(0.01);
     	//Requires range. One of the boundaries should be 0.
     	setOutputRange(-1,1);
+    	//Arbitrary Speed Constant For Now
+    	setSetpoint(0.6);
     }
 
     public void initDefaultCommand() {
