@@ -2,11 +2,15 @@
 package org.usfirst.frc.team2554.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.ConditionalCommand;
+import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 import org.usfirst.frc.team2554.robot.commands.*;
 import org.usfirst.frc.team2554.robot.subsystems.*;
@@ -20,17 +24,21 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
+    public static final double DEADZONE = 0.15;
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static OI oi;
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
-	public static Hopper hopper = new Hopper();
+	public static Feeder feeder = new Feeder();
 	public static Shooter shooter = new Shooter();
 	public static Intake intake = new Intake();
 	public static Climber climber = new Climber();
+	public static DigitalInput feederSwitch = new DigitalInput(0);
 	Command autonomousCommand;
+	//Should not be re-instantiated every time because a thread is created
+	PIDCommand drivePID = new DrivePID();
+	public static ConditionalCommand adjustFeederConditional;
 	SendableChooser<Command> chooser = new SendableChooser<>();
-
+	public static Timer timer = new Timer();
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -39,7 +47,12 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 		oi.climbButton.whileHeld(new ClimbUp());
-	//	chooser.addDefault("Default Auto", new DriveTrainDefault());
+		oi.shootingTrigger.whileActive(new ShootingGroup());
+		oi.intakeTrigger.whileActive(new SpinIntake());
+		//Tune Numbers
+		oi.drivePIDButton.whileHeld(drivePID);
+		adjustFeederConditional = new AdjustFeederConditional(new AdjustFeeder());
+		//chooser.addDefault("Default Auto", new DriveTrainDefault());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 	}

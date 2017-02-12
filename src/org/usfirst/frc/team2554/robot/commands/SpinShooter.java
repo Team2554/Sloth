@@ -26,8 +26,10 @@ public class SpinShooter extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(Robot.oi.controller.getRawAxis(Robot.oi.ryAxis) == 0)
-    		return true;
+    	//Deprecated
+    	//Bound to Trigger
+    	//if(Robot.oi.controller.getRawAxis(Robot.oi.ryAxis) == 0)
+    	//	return true;
         return false;
     }
 

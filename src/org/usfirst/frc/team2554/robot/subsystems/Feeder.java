@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class Hopper extends Subsystem {
-	Victor hopper = new Victor(RobotMap.hopper);
+public class Feeder extends Subsystem {
+	Victor feeder = new Victor(RobotMap.hopper);
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -19,11 +19,11 @@ public class Hopper extends Subsystem {
 		stop();
     }
     
-    public void spin(){
-    	hopper.set(0.6);
+    public void spin(double speed){
+    	feeder.set(speed);
     }
     public void stop(){
-    	hopper.set(0);
+    	feeder.set(0);
     }
 }
 
