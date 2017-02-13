@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class DriveTrain extends Subsystem {
-    double averageXaxisMag, averageYaxisMag, averageZaxisMag;
+    double averageXaxisMag, averageYaxisMag;
     OI oi = Robot.oi;
     static final double DEADZONE = Robot.DEADZONE;
 	// Put methods for controlling this subsystem
@@ -26,13 +26,14 @@ public class DriveTrain extends Subsystem {
 	public void mecaDrive(){
 		//Code will be here. Arjun please find it.
 
+		//if both are going in different directions
 		if(checkSign(oi.getRawAxis(oi.stickLeftY)) == -checkSign(oi.controller.getRawAxis(oi.stickRightY))){
 			if(oi.controller.getRawAxis(oi.stickLeftY) > DEADZONE && oi.controller.getRawAxis(oi.stickRightY) > DEADZONE){
 				averageYaxisMag = (oi.controller.getRawAxis(oi.stickLeftY) - oi.controller.getRawAxis(oi.stickRightY))/2.0;
 			}
 			else
 				averageYaxisMag = 0;
-			myRobot.mecanumDrive_Cartesian(0, 0, averageYaxisMag/5, 0);
+			drive(0, 0, averageYaxisMag/5);
 		}
 		//if both are going in same directions
 		if(checkSign(oi.controller.getRawAxis(oi.stickLeftX)) == checkSign(oi.controller.getRawAxis(oi.stickRightX))){
@@ -44,7 +45,7 @@ public class DriveTrain extends Subsystem {
 					averageYaxisMag = (oi.controller.getRawAxis(oi.stickLeftY)+oi.controller.getRawAxis(oi.stickRightY))/2.0;
 				else
 					averageYaxisMag = 0;
-				myRobot.mecanumDrive_Cartesian(averageXaxisMag/5, averageYaxisMag/5, 0, 0);
+				drive(averageXaxisMag/5, averageYaxisMag/5, 0);
 			}
 		}
 

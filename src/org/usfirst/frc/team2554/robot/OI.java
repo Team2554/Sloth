@@ -19,29 +19,26 @@ public class OI {
 		public double getRawAxis( int axis ) {
 			return controller.getRawAxis(axis);
 		}
-	//Axis
-		final public int lyAxis = 1;
-		final public int ryAxis = 5;
+
 	//Mapping of the Axis on the Joystick
-		/*
-		 1 is the L Y Axis
-		 2 is L Trigger
-		 3 is R Trigger
-		 5 is the R Y Axis
-		 */
 		final public int stickLeftX = 0;
 		final public int stickLeftY = 1;
 		final public int stickRightX = 4;
 		final public int stickRightY = 5;
 	//Buttons
+		//Button Locations
 		final private int climb = 1;
-		Button climbButton = new JoystickButton(controller, climb);
-		//Change Button Number
 		final private int drivePID = 2;
+
+		//Button objects
+		Button climbButton = new JoystickButton(controller, climb);
 		Button drivePIDButton = new JoystickButton(controller, drivePID);
 	//Triggers
-		Trigger shootingTrigger = new JoystickAxis(controller, ryAxis);
-		Trigger intakeTrigger = new JoystickAxis(controller, lyAxis);
+		Trigger shootingTrigger = new JoystickAxis(controller, stickRightY);
+		Trigger intakeTrigger = new JoystickAxis(controller, stickLeftY);
+
+	/* I'M NOT DELETING THESE YET */
+
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
