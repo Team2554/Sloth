@@ -16,6 +16,9 @@ public class OI {
 	
 	//Controller Ports
 		public Joystick controller = new Joystick(0);
+		public double getRawAxis( int axis ) {
+			return controller.getRawAxis(axis);
+		}
 	//Axis
 		final public int lyAxis = 1;
 		final public int ryAxis = 5;
