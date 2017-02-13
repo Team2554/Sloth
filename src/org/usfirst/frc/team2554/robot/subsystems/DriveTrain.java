@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class DriveTrain extends Subsystem {
-    double averageXaxisMag, averageYaxisMag;
+    double averageXaxisMag, averageYaxisMag, averageZaxisMag;
     OI oi = Robot.oi;
     static final double DEADZONE = Robot.DEADZONE;
 	// Put methods for controlling this subsystem
@@ -28,21 +28,21 @@ public class DriveTrain extends Subsystem {
 
 		//if both are going in different directions
 		if(checkSign(oi.getRawAxis(oi.stickLeftY)) == -checkSign(oi.controller.getRawAxis(oi.stickRightY))){
-			if(oi.controller.getRawAxis(oi.stickLeftY) > DEADZONE && oi.controller.getRawAxis(oi.stickRightY) > DEADZONE){
-				averageYaxisMag = (oi.controller.getRawAxis(oi.stickLeftY) - oi.controller.getRawAxis(oi.stickRightY))/2.0;
+			if(oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightY) > DEADZONE){
+				averageZaxisMag = (oi.getRawAxis(oi.stickLeftY) - oi.getRawAxis(oi.stickRightY))/2.0;
 			}
 			else
-				averageYaxisMag = 0;
-			drive(0, 0, averageYaxisMag/5);
+				averageZaxisMag = 0;
+			drive(0, 0, averageZaxisMag/5);
 		}
 		//if both are going in same directions
-		if(checkSign(oi.controller.getRawAxis(oi.stickLeftX)) == checkSign(oi.controller.getRawAxis(oi.stickRightX))){
-			if(oi.controller.getRawAxis(oi.stickLeftY) > DEADZONE && oi.controller.getRawAxis(oi.stickRightX) > DEADZONE)
-				averageXaxisMag = (oi.controller.getRawAxis(oi.stickLeftX)+oi.controller.getRawAxis(oi.stickRightX))/2.0;
+		if(checkSign(oi.getRawAxis(oi.stickLeftX)) == checkSign(oi.getRawAxis(oi.stickRightX))){
+			if(oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightX) > DEADZONE)
+				averageXaxisMag = (oi.getRawAxis(oi.stickLeftX)+oi.getRawAxis(oi.stickRightX))/2.0;
 			else {
 				averageXaxisMag = 0;
-				if(oi.controller.getRawAxis(oi.stickLeftY) > DEADZONE && oi.controller.getRawAxis(oi.stickRightX) > DEADZONE)
-					averageYaxisMag = (oi.controller.getRawAxis(oi.stickLeftY)+oi.controller.getRawAxis(oi.stickRightY))/2.0;
+				if(oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightX) > DEADZONE)
+					averageYaxisMag = (oi.getRawAxis(oi.stickLeftY)+oi.getRawAxis(oi.stickRightY))/2.0;
 				else
 					averageYaxisMag = 0;
 				drive(averageXaxisMag/5, averageYaxisMag/5, 0);

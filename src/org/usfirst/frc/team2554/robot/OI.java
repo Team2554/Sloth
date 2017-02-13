@@ -19,6 +19,7 @@ public class OI {
 		public double getRawAxis( int axis ) {
 			return controller.getRawAxis(axis);
 		}
+		public double getAbsRawAxis( int axis ) { return Math.abs( controller.getRawAxis(axis) ); }
 
 	//Mapping of the Axis on the Joystick
 		final public int stickLeftX = 0;
