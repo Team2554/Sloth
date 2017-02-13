@@ -31,4 +31,7 @@ public class ShootingGroup extends CommandGroup {
     protected void interrupted() {
     	Robot.adjustFeederConditional.start();
     }
+    protected void end(){
+    	Robot.adjustFeederConditional.start();
+    }
 }

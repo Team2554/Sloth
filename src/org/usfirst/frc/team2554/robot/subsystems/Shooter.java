@@ -57,13 +57,4 @@ public class Shooter extends PIDSubsystem {
     	shooterL.set(0);
     	shooterR.set(0);
     }
-    public void enablePID(){
-    	enable();
-    }
-    public void disablePID(){
-    	disable();
-    }
-    public boolean isTarget(){
-    	return onTarget();
-    }
 }

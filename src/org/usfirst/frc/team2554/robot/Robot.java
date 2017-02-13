@@ -49,6 +49,7 @@ public class Robot extends IterativeRobot {
 		oi.climbButton.whileHeld(new ClimbUp());
 		oi.shootingTrigger.whileActive(new ShootingGroup());
 		oi.intakeTrigger.whileActive(new SpinIntake());
+		oi.driveTrigger.whileActive(new MecaDrive());
 		//Tune Numbers
 		oi.drivePIDButton.whileHeld(drivePID);
 		adjustFeederConditional = new AdjustFeederConditional(new AdjustFeeder());
@@ -64,12 +65,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		Scheduler.getInstance().removeAll();
 	}
 
 	@Override
 	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
+		Scheduler.getInstance().removeAll();
 	}
 
 	/**
@@ -131,5 +132,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
+	}
+	public static boolean isNotDeadzone(double value){
+		if(value > Robot.DEADZONE || value < -Robot.DEADZONE)
+			return true;
+		return false;
 	}
 }

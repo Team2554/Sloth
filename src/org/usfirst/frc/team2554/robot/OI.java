@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2554.robot;
 
+import org.usfirst.frc.team2554.robot.triggers.DriveTrigger;
 import org.usfirst.frc.team2554.robot.triggers.JoystickAxis;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -35,11 +36,17 @@ public class OI {
 		Button climbButton = new JoystickButton(controller, climb);
 		Button drivePIDButton = new JoystickButton(controller, drivePID);
 	//Triggers
+<<<<<<< Updated upstream
 		Trigger shootingTrigger = new JoystickAxis(controller, stickRightY);
 		Trigger intakeTrigger = new JoystickAxis(controller, stickLeftY);
 
 	/* I'M NOT DELETING THESE YET */
 
+=======
+		Trigger shootingTrigger = new JoystickAxis(controller, ryAxis);
+		Trigger intakeTrigger = new JoystickAxis(controller, lyAxis);
+		Trigger driveTrigger = new DriveTrigger(controller);
+>>>>>>> Stashed changes
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
