@@ -2,13 +2,12 @@ package org.usfirst.frc.team2554.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-import org.usfirst.frc.team2554.robot.Robot;
 /**
  *
  */
-public class ShootingGroup extends CommandGroup {
+public class AdjustShootingGroup extends CommandGroup {
 
-    public ShootingGroup() {
+    public AdjustShootingGroup() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -25,14 +24,7 @@ public class ShootingGroup extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	setInterruptible(true);
-    	addParallel(new SpinShooter());
-    	addParallel(new SpinFeeder());
-    }
-    protected void interrupted() {
-    	Robot.adjustShooterConditional.start();
-    }
-    protected void end(){
-    	Robot.adjustShooterConditional.start();
+    	addParallel(new AdjustFeeder());
+    	addParallel(new AdjustShooter());
     }
 }

@@ -17,6 +17,10 @@ public class RobotMap {
 	final public static int hopper = 8;
 	final public static int climber = 9;
 	
+	//Limit Switch DIO
+	final public static int limitSwitch = 0;
+	final public static int shooterEncoderA = 1;
+	final public static int shooterEncoderB = 2;
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;

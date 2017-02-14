@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.ConditionalCommand;
 
 import org.usfirst.frc.team2554.robot.Robot;
-public class AdjustFeederConditional extends ConditionalCommand{
+public class AdjustShootingConditional extends ConditionalCommand{
 
-	public AdjustFeederConditional(Command onTrue) {
+	public AdjustShootingConditional(Command onTrue) {
 		super(onTrue);
 	}
 	public boolean condition(){

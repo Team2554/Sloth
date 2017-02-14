@@ -11,11 +11,13 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 
 import org.usfirst.frc.team2554.robot.commands.*;
 import org.usfirst.frc.team2554.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogInput;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -32,11 +34,12 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter = new Shooter();
 	public static Intake intake = new Intake();
 	public static Climber climber = new Climber();
-	public static DigitalInput feederSwitch = new DigitalInput(0);
+	public static DigitalInput feederSwitch = new DigitalInput(RobotMap.limitSwitch);
+	public static Encoder shooterEncoder = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB);
 	Command autonomousCommand;
 	//Should not be re-instantiated every time because a thread is created
 	PIDCommand drivePID = new DrivePID();
-	public static ConditionalCommand adjustFeederConditional;
+	public static ConditionalCommand adjustShooterConditional;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	public static Timer timer = new Timer();
 	/**
@@ -52,10 +55,12 @@ public class Robot extends IterativeRobot {
 		oi.driveTrigger.whileActive(new MecaDrive());
 		//Tune Numbers
 		oi.drivePIDButton.whileHeld(drivePID);
-		adjustFeederConditional = new AdjustFeederConditional(new AdjustFeeder());
+		adjustShooterConditional = new AdjustShootingConditional(new AdjustShootingGroup());
 		//chooser.addDefault("Default Auto", new DriveTrainDefault());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+		//CHANGE Distance Value
+		shooterEncoder.setDistancePerPulse(1);
 	}
 
 	/**
