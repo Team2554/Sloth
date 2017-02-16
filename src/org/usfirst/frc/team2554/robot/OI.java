@@ -24,7 +24,7 @@ public class OI {
 			return Math.abs( controller.getRawAxis(axis) ); 
 		}
 	//Top Triggers
-		final public int rTrigger = 3;
+		final public int rTrigger = 1;
 		final public int lTrigger = 2;
 	//Mapping of the Axis on the Joystick
 		final public int stickLeftX = 0;
