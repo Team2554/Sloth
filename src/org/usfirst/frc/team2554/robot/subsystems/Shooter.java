@@ -21,11 +21,11 @@ public class Shooter extends PIDSubsystem {
         //                  to
         // enable() - Enables the PID controller.
     	super("Shooter",0,0,0);
+    	setSetpoint(0.6);
     	setAbsoluteTolerance(0.01);
     	//Requires range. One of the boundaries should be 0.
     	setOutputRange(-1,1);
     	//Arbitrary Speed Constant For Now
-    	setSetpoint(0.6);
     }
 
     public void initDefaultCommand() {
