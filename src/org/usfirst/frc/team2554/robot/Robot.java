@@ -33,12 +33,9 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter = new Shooter();
 	public static Intake intake = new Intake();
 	public static Climber climber = new Climber();
-<<<<<<< HEAD
 	public static DigitalInput feederSwitch = new DigitalInput(RobotMap.limitSwitchFeeder);
 	public static Encoder shooterEncoder = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB);
-=======
 	public static DigitalInput feederSwitch = new DigitalInput(0);
->>>>>>> origin/master
 	Command autonomousCommand;
 	//Should not be re-instantiated every time because a thread is created
 	PIDCommand drivePID = new DrivePID();
