@@ -10,6 +10,7 @@ public class AdjustShootingConditional extends ConditionalCommand{
 		super(onTrue);
 	}
 	public boolean condition(){
-		return !Robot.feederSwitch.get();
+		//The boolean may need a !. I don't remember my reasoning for having one right now.
+		return Robot.feederSwitch.get();
 	}
 }

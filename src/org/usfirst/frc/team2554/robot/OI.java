@@ -34,11 +34,8 @@ public class OI {
 	//Buttons
 		//Button Locations
 		final private int climb = 1;
-		final private int drivePID = 2;
-
 		//Button objects
 		Button climbButton = new JoystickButton(controller, climb);
-		Button drivePIDButton = new JoystickButton(controller, drivePID);
 	//Triggers
 		Trigger shootingTrigger = new JoystickAxis(controller, rTrigger);
 		Trigger intakeTrigger = new JoystickAxis(controller, lTrigger);

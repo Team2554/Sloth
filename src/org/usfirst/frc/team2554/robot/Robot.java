@@ -34,11 +34,11 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter = new Shooter();
 	public static Intake intake = new Intake();
 	public static Climber climber = new Climber();
-	public static DigitalInput feederSwitch = new DigitalInput(RobotMap.limitSwitch);
+	public static DigitalInput feederSwitch = new DigitalInput(RobotMap.limitSwitchFeeder);
 	public static Encoder shooterEncoder = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB);
+	public static Camera camera = new Camera();
 	Command autonomousCommand;
 	//Should not be re-instantiated every time because a thread is created
-	PIDCommand drivePID = new DrivePID();
 	public static ConditionalCommand adjustShooterConditional;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	public static Timer timer = new Timer();
@@ -54,7 +54,6 @@ public class Robot extends IterativeRobot {
 		oi.intakeTrigger.whileActive(new SpinIntake());
 		oi.driveTrigger.whileActive(new MecaDrive());
 		//Tune Numbers
-		oi.drivePIDButton.whileHeld(drivePID);
 		adjustShooterConditional = new AdjustShootingConditional(new AdjustShootingGroup());
 		//chooser.addDefault("Default Auto", new DriveTrainDefault());
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -129,6 +128,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+    	if(Robot.oi.controller.getRawButton(2))
+    		Robot.camera.switchCam();
+    	Robot.camera.grabImage();
+    	Robot.camera.outputVideo();
 	}
 
 	/**
