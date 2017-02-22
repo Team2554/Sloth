@@ -18,7 +18,7 @@ public class Climber extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
 	public void climb(){
-    	climber.set(0.7);
+    	climber.set(0.5);
     }
 	public void stop(){
 		climber.set(0);

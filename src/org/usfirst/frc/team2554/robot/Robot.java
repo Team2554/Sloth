@@ -3,6 +3,7 @@ package org.usfirst.frc.team2554.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Command;
@@ -29,8 +30,8 @@ import edu.wpi.first.wpilibj.CameraServer;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	public double averageXaxisMag, averageYaxisMag, averageZaxisMag;
     public static final double DEADZONE = 0.15;
-	public static final DriveTrain driveTrain = new DriveTrain();
 	public static OI oi;
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	public static Feeder feeder = new Feeder();
@@ -39,17 +40,13 @@ public class Robot extends IterativeRobot {
 	public static Climber climber = new Climber();
 	public static DigitalInput feederSwitch = new DigitalInput(RobotMap.limitSwitchFeeder);
 	public static Encoder shooterEncoder = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB);
-	public static Camera camera = new Camera();
 	Command autonomousCommand;
 	//Should not be re-instantiated every time because a thread is created
-<<<<<<< HEAD
-=======
-	PIDCommand drivePID = new DrivePID();
 	PIDController encoderController;
 	Encoder encoder;
 	Victor output;
+	RobotDrive myRobot;
 	
->>>>>>> origin/master
 	public static ConditionalCommand adjustShooterConditional;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	public static Timer timer = new Timer();
@@ -61,11 +58,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		myRobot = new RobotDrive(RobotMap.driveTrain[0], RobotMap.driveTrain[1], RobotMap.driveTrain[2], RobotMap.driveTrain[3]);
 		oi = new OI();
 		oi.climbButton.whileHeld(new ClimbUp());
 		oi.shootingTrigger.whileActive(new ShootingGroup());
 		oi.intakeTrigger.whileActive(new SpinIntake());
-		oi.driveTrigger.whileActive(new MecaDrive());
+		//oi.driveTrigger.whileActive(new MecaDrive());
 		
 		//Tune Numbers
 		adjustShooterConditional = new AdjustShootingConditional(new AdjustShootingGroup());
@@ -76,17 +74,12 @@ public class Robot extends IterativeRobot {
 //		encoderController.setOutputRange(-1, 1);
 //		LiveWindow.addActuator("Test", "PID", encoderController);
 //		LiveWindow.addSensor("hi", "hi", shooterEncoder);
-		
+		LiveWindow.addSensor("hi", "hi", gyro);
 		//chooser.addDefault("Default Auto", new DriveTrainDefault());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 		//CHANGE Distance Value
 		shooterEncoder.setDistancePerPulse(1);
-		
-		//CAMERA
-		cs = CameraServer.getInstance();
-		cs.addServer("cam0");
-		cs.startAutomaticCapture();
 	}
 
 	/**
@@ -154,11 +147,30 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		myRobot.mecanumDrive_Cartesian(0, 0, 0.5, 0);
 		Scheduler.getInstance().run();
-    	if(Robot.oi.controller.getRawButton(2))
-    		Robot.camera.switchCam();
-    	Robot.camera.grabImage();
-    	Robot.camera.outputVideo();
+		if(checkSign(oi.getRawAxis(oi.stickLeftY)) == -checkSign(oi.controller.getRawAxis(oi.stickRightY))){
+			System.out.println(oi.getRawAxis(oi.stickLeftY) + " " + oi.getRawAxis(oi.stickRightY));
+			if(oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightY) > DEADZONE){
+				averageZaxisMag = (oi.getRawAxis(oi.stickLeftY) - oi.getRawAxis(oi.stickRightY))/2.0;
+			}
+			else
+				averageZaxisMag = 0;
+			drive(0, 0, averageZaxisMag/5);
+		}
+		//if both are going in same directions
+		if(checkSign(oi.getRawAxis(oi.stickLeftX)) == checkSign(oi.getRawAxis(oi.stickRightX))){
+			if(oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightX) > DEADZONE)
+				averageXaxisMag = (oi.getRawAxis(oi.stickLeftX)+oi.getRawAxis(oi.stickRightX))/2.0;
+			else {
+				averageXaxisMag = 0;
+				if(oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightX) > DEADZONE)
+					averageYaxisMag = (oi.getRawAxis(oi.stickLeftY)+oi.getRawAxis(oi.stickRightY))/2.0;
+				else
+					averageYaxisMag = 0;
+				drive(averageXaxisMag/5, averageYaxisMag/5, 0);
+			}
+		}
 	}
 
 	/**
@@ -172,5 +184,15 @@ public class Robot extends IterativeRobot {
 		if(value > Robot.DEADZONE || value < -Robot.DEADZONE)
 			return true;
 		return false;
+	}
+	public int checkSign(double checkNum){
+		if(checkNum < 0)
+			return -1;
+		if(checkNum > 0)
+			return 1;
+		return 0;
+	}
+	public void drive(double x, double y, double rotation){
+		myRobot.mecanumDrive_Cartesian(x, y, rotation, Robot.gyro.getAngle());
 	}
 }
