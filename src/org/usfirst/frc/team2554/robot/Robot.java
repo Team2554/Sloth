@@ -2,7 +2,9 @@
 package org.usfirst.frc.team2554.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.ConditionalCommand;
 import edu.wpi.first.wpilibj.command.PIDCommand;
@@ -18,6 +20,7 @@ import org.usfirst.frc.team2554.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.CameraServer;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -39,9 +42,19 @@ public class Robot extends IterativeRobot {
 	public static Camera camera = new Camera();
 	Command autonomousCommand;
 	//Should not be re-instantiated every time because a thread is created
+<<<<<<< HEAD
+=======
+	PIDCommand drivePID = new DrivePID();
+	PIDController encoderController;
+	Encoder encoder;
+	Victor output;
+	
+>>>>>>> origin/master
 	public static ConditionalCommand adjustShooterConditional;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	public static Timer timer = new Timer();
+	CameraServer cs;
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -53,13 +66,27 @@ public class Robot extends IterativeRobot {
 		oi.shootingTrigger.whileActive(new ShootingGroup());
 		oi.intakeTrigger.whileActive(new SpinIntake());
 		oi.driveTrigger.whileActive(new MecaDrive());
+		
 		//Tune Numbers
 		adjustShooterConditional = new AdjustShootingConditional(new AdjustShootingGroup());
+//		output = new Victor(0);
+//		encoderController = new PIDController(0,0,0,shooterEncoder, output);
+//		encoderController.setPercentTolerance(15);
+//		encoderController.setContinuous(false);
+//		encoderController.setOutputRange(-1, 1);
+//		LiveWindow.addActuator("Test", "PID", encoderController);
+//		LiveWindow.addSensor("hi", "hi", shooterEncoder);
+		
 		//chooser.addDefault("Default Auto", new DriveTrainDefault());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 		//CHANGE Distance Value
 		shooterEncoder.setDistancePerPulse(1);
+		
+		//CAMERA
+		cs = CameraServer.getInstance();
+		cs.addServer("cam0");
+		cs.startAutomaticCapture();
 	}
 
 	/**
