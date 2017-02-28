@@ -21,7 +21,17 @@ public class ClimbUp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    //	Robot.climber.climb();
+    }
+    
+    public void start() {
     	Robot.climber.climb();
+    	//inb4 "broke the code"
+    	//this is how you're supposed to use whileheld(), kevin
+    }
+    
+    public void cancel() {
+    	Robot.climber.stop();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -31,7 +41,7 @@ public class ClimbUp extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.climber.stop();
+//    	Robot.climber.stop();
     }
 
     // Called when another command which requires one or more of the same

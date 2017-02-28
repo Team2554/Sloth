@@ -22,6 +22,7 @@ import org.usfirst.frc.team2554.robot.subsystems.*;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -31,7 +32,7 @@ import edu.wpi.first.wpilibj.CameraServer;
  */
 public class Robot extends IterativeRobot {
 	public double averageXaxisMag, averageYaxisMag, averageZaxisMag;
-    public static final double DEADZONE = 0.15;
+	public static final double DEADZONE = 0.15;
 	public static OI oi;
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	public static Feeder feeder = new Feeder();
@@ -41,44 +42,45 @@ public class Robot extends IterativeRobot {
 	public static DigitalInput feederSwitch = new DigitalInput(RobotMap.limitSwitchFeeder);
 	public static Encoder shooterEncoder = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB);
 	Command autonomousCommand;
-	//Should not be re-instantiated every time because a thread is created
+	// Should not be re-instantiated every time because a thread is created
 	PIDController encoderController;
 	Encoder encoder;
 	Victor output;
 	RobotDrive myRobot;
-	
+
 	public static ConditionalCommand adjustShooterConditional;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	public static Timer timer = new Timer();
 	CameraServer cs;
-	
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
-		myRobot = new RobotDrive(RobotMap.driveTrain[0], RobotMap.driveTrain[1], RobotMap.driveTrain[2], RobotMap.driveTrain[3]);
+		myRobot = new RobotDrive(RobotMap.driveTrain[0], RobotMap.driveTrain[1], RobotMap.driveTrain[2],
+				RobotMap.driveTrain[3]);
 		oi = new OI();
 		oi.climbButton.whileHeld(new ClimbUp());
 		oi.shootingTrigger.whileActive(new ShootingGroup());
 		oi.intakeTrigger.whileActive(new SpinIntake());
-		//oi.driveTrigger.whileActive(new MecaDrive());
-		
-		//Tune Numbers
+		// oi.driveTrigger.whileActive(new MecaDrive());
+
+		// Tune Numbers
 		adjustShooterConditional = new AdjustShootingConditional(new AdjustShootingGroup());
-//		output = new Victor(0);
-//		encoderController = new PIDController(0,0,0,shooterEncoder, output);
-//		encoderController.setPercentTolerance(15);
-//		encoderController.setContinuous(false);
-//		encoderController.setOutputRange(-1, 1);
-//		LiveWindow.addActuator("Test", "PID", encoderController);
-//		LiveWindow.addSensor("hi", "hi", shooterEncoder);
+		// output = new Victor(0);
+		// encoderController = new PIDController(0,0,0,shooterEncoder, output);
+		// encoderController.setPercentTolerance(15);
+		// encoderController.setContinuous(false);
+		// encoderController.setOutputRange(-1, 1);
+		// LiveWindow.addActuator("Test", "PID", encoderController);
+		// LiveWindow.addSensor("hi", "hi", shooterEncoder);
 		LiveWindow.addSensor("hi", "hi", gyro);
-		//chooser.addDefault("Default Auto", new DriveTrainDefault());
+		// chooser.addDefault("Default Auto", new DriveTrainDefault());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
-		//CHANGE Distance Value
+		// CHANGE Distance Value
 		shooterEncoder.setDistancePerPulse(1);
 	}
 
@@ -147,30 +149,58 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		myRobot.mecanumDrive_Cartesian(0, 0, 0.5, 0);
+		// myRobot.mecanumDrive_Cartesian(0, 0, 0.5, 0);
 		Scheduler.getInstance().run();
-		if(checkSign(oi.getRawAxis(oi.stickLeftY)) == -checkSign(oi.controller.getRawAxis(oi.stickRightY))){
+		// Daniel's code
+//		if (checkSign(oi.getRawAxis(oi.stickLeftY)) == -checkSign(oi.controller.getRawAxis(oi.stickRightY))) { // Y are opposite
+//			if (oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightY) > DEADZONE) {
+//				averageZaxisMag = (oi.getRawAxis(oi.stickLeftY) - oi.getRawAxis(oi.stickRightY)) / 2.0;
+//			} else
+//				averageZaxisMag = 0;
+//		} else if (checkSign(oi.getRawAxis(oi.stickLeftY)) == checkSign(oi.controller.getRawAxis(oi.stickRightY))) { // Y are same
+//			if (oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightY) > DEADZONE)
+//				averageYaxisMag = (oi.getRawAxis(oi.stickLeftY) + oi.getRawAxis(oi.stickRightY)) / 2.0;
+//			else
+//				averageYaxisMag = 0;
+//		}
+//		if (checkSign(oi.getRawAxis(oi.stickLeftX)) == checkSign(oi.getRawAxis(oi.stickRightX))) {
+//			if (oi.getAbsRawAxis(oi.stickLeftX) > DEADZONE && oi.getAbsRawAxis(oi.stickRightX) > DEADZONE)
+//				averageXaxisMag = (oi.getRawAxis(oi.stickLeftX) + oi.getRawAxis(oi.stickRightX)) / 2.0;
+//			else {
+//				averageXaxisMag = 0;
+//			}
+//
+//			drive(averageXaxisMag / 5, averageYaxisMag / 5, averageZaxisMag / 5);
+//		}
+//		System.out.println("averageXaxisMag: " + averageXaxisMag);
+//		System.out.println("averageYaxisMag: " + averageYaxisMag);
+//		System.out.println("averageZaxsiMag: " + averageZaxisMag);
+
+		// Kevin's code
+		if(checkSign(oi.getRawAxis(oi.stickLeftY)) == -checkSign(oi.controller.getRawAxis(oi.stickRightY))) {
 			System.out.println(oi.getRawAxis(oi.stickLeftY) + " " + oi.getRawAxis(oi.stickRightY));
-			if(oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightY) > DEADZONE){
+			System.out.println("kelly");
+			if(oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightY) > DEADZONE) {	
 				averageZaxisMag = (oi.getRawAxis(oi.stickLeftY) - oi.getRawAxis(oi.stickRightY))/2.0;
 			}
 			else
 				averageZaxisMag = 0;
 			drive(0, 0, averageZaxisMag/5);
-		}
-		//if both are going in same directions
-		if(checkSign(oi.getRawAxis(oi.stickLeftX)) == checkSign(oi.getRawAxis(oi.stickRightX))){
-			if(oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightX) > DEADZONE)
-				averageXaxisMag = (oi.getRawAxis(oi.stickLeftX)+oi.getRawAxis(oi.stickRightX))/2.0;
-			else {
-				averageXaxisMag = 0;
-				if(oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightX) > DEADZONE)
-					averageYaxisMag = (oi.getRawAxis(oi.stickLeftY)+oi.getRawAxis(oi.stickRightY))/2.0;
-				else
-					averageYaxisMag = 0;
-				drive(averageXaxisMag/5, averageYaxisMag/5, 0);
-			}
-		}
+		 }
+		 //if both are going in same directions
+		 if(checkSign(oi.getRawAxis(oi.stickLeftX)) == checkSign(oi.getRawAxis(oi.stickRightX))) {
+			 System.out.println("daniel");
+			 if(oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightX) > DEADZONE)
+				 averageXaxisMag = (oi.getRawAxis(oi.stickLeftX)+oi.getRawAxis(oi.stickRightX))/2.0;
+			 else {
+				 averageXaxisMag = 0;
+				 if(oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightX) > DEADZONE)
+					 averageYaxisMag = (oi.getRawAxis(oi.stickLeftY)+oi.getRawAxis(oi.stickRightY))/2.0;
+				 else
+					 averageYaxisMag = 0;
+				 drive(averageXaxisMag/5, averageYaxisMag/5, 0);
+			 }
+		 }
 	}
 
 	/**
@@ -180,19 +210,22 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
-	public static boolean isNotDeadzone(double value){
-		if(value > Robot.DEADZONE || value < -Robot.DEADZONE)
+
+	public static boolean isNotDeadzone(double value) {
+		if (value > Robot.DEADZONE || value < -Robot.DEADZONE)
 			return true;
 		return false;
 	}
-	public int checkSign(double checkNum){
-		if(checkNum < 0)
+
+	public int checkSign(double checkNum) {
+		if (checkNum < 0)
 			return -1;
-		if(checkNum > 0)
+		if (checkNum > 0)
 			return 1;
 		return 0;
 	}
-	public void drive(double x, double y, double rotation){
+
+	public void drive(double x, double y, double rotation) {
 		myRobot.mecanumDrive_Cartesian(x, y, rotation, Robot.gyro.getAngle());
 	}
 }
