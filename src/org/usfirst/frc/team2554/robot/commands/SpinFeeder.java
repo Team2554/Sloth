@@ -22,10 +22,11 @@ public class SpinFeeder extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.shooter.onTarget())
-    		Robot.feeder.spin(0.6);
     }
-
+    public void start() {
+    	//if(Robot.shooter.onTarget())
+		Robot.feeder.spin(0.6);
+    }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//Deprecated
@@ -34,7 +35,9 @@ public class SpinFeeder extends Command {
     	//	return true;
         return false;
     }
-
+    public void cancel(){
+    	Robot.feeder.stop();
+    }
     // Called once after isFinished returns true
     protected void end() {
     	Robot.feeder.stop();

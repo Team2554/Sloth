@@ -22,9 +22,10 @@ public class SpinShooter extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.spin();
     }
-
+    public void start(){
+    	Robot.shooter.spin(0.6);
+    }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//Deprecated
@@ -34,10 +35,12 @@ public class SpinShooter extends Command {
         return false;
     }
 
-    // Called once after isFinished returns true
-    protected void end() {
+    public void cancel(){
     	Robot.shooter.stop();
     	Robot.shooter.disable();
+    }
+    // Called once after isFinished returns true
+    protected void end() {
     }
 
     // Called when another command which requires one or more of the same

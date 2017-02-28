@@ -63,8 +63,9 @@ public class Robot extends IterativeRobot {
 				RobotMap.driveTrain[3]);
 		oi = new OI();
 		oi.climbButton.whileHeld(new ClimbUp());
-		oi.shootingTrigger.whileActive(new ShootingGroup());
-		oi.intakeTrigger.whileActive(new SpinIntake());
+		oi.shootingTrigger.whileActive(new SpinShooter());
+		oi.feederTrigger.whileActive(new SpinFeeder());
+		oi.intakeButton.whileHeld(new SpinIntake());
 		// oi.driveTrigger.whileActive(new MecaDrive());
 
 		// Tune Numbers

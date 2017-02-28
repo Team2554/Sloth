@@ -21,9 +21,11 @@ public class SpinIntake extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    }
+    
+    public void start(){
     	Robot.intake.spin();
     }
-
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//Deprecated
@@ -33,6 +35,9 @@ public class SpinIntake extends Command {
         return false;
     }
 
+    public void cancel(){
+    	Robot.intake.stop();
+    }
     // Called once after isFinished returns true
     protected void end() {
     	Robot.intake.stop();

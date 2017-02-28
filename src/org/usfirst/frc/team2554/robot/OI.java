@@ -17,12 +17,16 @@ public class OI {
 	
 	//Controller Ports
 		public Joystick controller = new Joystick(0);
+		public Joystick joystick = new Joystick(1);
 		public double getRawAxis( int axis ) {
-			return controller.getRawAxis(axis);
+			return joystick.getRawAxis(axis);
 		}
 		public double getAbsRawAxis( int axis ) { 
-			return Math.abs( controller.getRawAxis(axis) ); 
+			return Math.abs( joystick.getRawAxis(axis) ); 
 		}
+	//Top Bumpers
+		final public int lBumper = 4;
+		final public int rBumper = 5;
 	//Top Triggers
 		final public int rTrigger = 3;
 		final public int lTrigger = 2;
@@ -36,9 +40,10 @@ public class OI {
 		final private int climb = 1;
 		//Button objects
 		Button climbButton = new JoystickButton(controller, climb);
+		Button intakeButton = new JoystickButton(controller, rBumper);
 	//Triggers
 		Trigger shootingTrigger = new JoystickAxis(controller, rTrigger);
-		Trigger intakeTrigger = new JoystickAxis(controller, lTrigger);
+		Trigger feederTrigger = new JoystickAxis(controller, lTrigger);
 		Trigger driveTrigger = new DriveTrigger(controller);
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
