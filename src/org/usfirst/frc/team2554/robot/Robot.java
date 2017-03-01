@@ -42,6 +42,7 @@ public class Robot extends IterativeRobot {
 	public static DigitalInput feederSwitch = new DigitalInput(RobotMap.limitSwitchFeeder);
 	public static Encoder shooterEncoder = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB);
 	Command autonomousCommand;
+	public static double Xaxis, Yaxis, Zaxis;
 	// Should not be re-instantiated every time because a thread is created
 	PIDController encoderController;
 	Encoder encoder;
@@ -146,62 +147,29 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
+	 * 
+	 * 
 	 * This function is called periodically during operator control
 	 */
 	@Override
 	public void teleopPeriodic() {
 		// myRobot.mecanumDrive_Cartesian(0, 0, 0.5, 0);
 		Scheduler.getInstance().run();
-		// Daniel's code
-//		if (checkSign(oi.getRawAxis(oi.stickLeftY)) == -checkSign(oi.controller.getRawAxis(oi.stickRightY))) { // Y are opposite
-//			if (oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightY) > DEADZONE) {
-//				averageZaxisMag = (oi.getRawAxis(oi.stickLeftY) - oi.getRawAxis(oi.stickRightY)) / 2.0;
-//			} else
-//				averageZaxisMag = 0;
-//		} else if (checkSign(oi.getRawAxis(oi.stickLeftY)) == checkSign(oi.controller.getRawAxis(oi.stickRightY))) { // Y are same
-//			if (oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightY) > DEADZONE)
-//				averageYaxisMag = (oi.getRawAxis(oi.stickLeftY) + oi.getRawAxis(oi.stickRightY)) / 2.0;
-//			else
-//				averageYaxisMag = 0;
-//		}
-//		if (checkSign(oi.getRawAxis(oi.stickLeftX)) == checkSign(oi.getRawAxis(oi.stickRightX))) {
-//			if (oi.getAbsRawAxis(oi.stickLeftX) > DEADZONE && oi.getAbsRawAxis(oi.stickRightX) > DEADZONE)
-//				averageXaxisMag = (oi.getRawAxis(oi.stickLeftX) + oi.getRawAxis(oi.stickRightX)) / 2.0;
-//			else {
-//				averageXaxisMag = 0;
-//			}
-//
-//			drive(averageXaxisMag / 5, averageYaxisMag / 5, averageZaxisMag / 5);
-//		}
-//		System.out.println("averageXaxisMag: " + averageXaxisMag);
-//		System.out.println("averageYaxisMag: " + averageYaxisMag);
-//		System.out.println("averageZaxsiMag: " + averageZaxisMag);
+		if (Math.abs(oi.getRawAxis(0)) > DEADZONE) {
+			Xaxis = oi.getRawAxis(0);
+		} else
+			Xaxis = 0.0;
+		if (Math.abs(oi.getRawAxis(1)) > DEADZONE) {
+			Yaxis = oi.getRawAxis(1);
+		} else
+			Yaxis = 0.0;
+		if (Math.abs(oi.getRawAxis(2)) > DEADZONE) {
+			Zaxis = oi.getRawAxis(2);
+		} else
+			Zaxis = 0.0;
 
-		// Kevin's code
-		if(checkSign(oi.getRawAxis(oi.stickLeftY)) == -checkSign(oi.controller.getRawAxis(oi.stickRightY))) {
-			System.out.println(oi.getRawAxis(oi.stickLeftY) + " " + oi.getRawAxis(oi.stickRightY));
-			System.out.println("kelly");
-			if(oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightY) > DEADZONE) {	
-				averageZaxisMag = (oi.getRawAxis(oi.stickLeftY) - oi.getRawAxis(oi.stickRightY))/2.0;
-			}
-			else
-				averageZaxisMag = 0;
-			drive(0, 0, averageZaxisMag/5);
-		 }
-		 //if both are going in same directions
-		 if(checkSign(oi.getRawAxis(oi.stickLeftX)) == checkSign(oi.getRawAxis(oi.stickRightX))) {
-			 System.out.println("daniel");
-			 if(oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightX) > DEADZONE)
-				 averageXaxisMag = (oi.getRawAxis(oi.stickLeftX)+oi.getRawAxis(oi.stickRightX))/2.0;
-			 else {
-				 averageXaxisMag = 0;
-				 if(oi.getAbsRawAxis(oi.stickLeftY) > DEADZONE && oi.getAbsRawAxis(oi.stickRightX) > DEADZONE)
-					 averageYaxisMag = (oi.getRawAxis(oi.stickLeftY)+oi.getRawAxis(oi.stickRightY))/2.0;
-				 else
-					 averageYaxisMag = 0;
-				 drive(averageXaxisMag/5, averageYaxisMag/5, 0);
-			 }
-		 }
+		myRobot.mecanumDrive_Cartesian(oi.getRawAxis(0), oi.getRawAxis(1), oi.getRawAxis(2), gyro.getAngle());
+
 	}
 
 	/**

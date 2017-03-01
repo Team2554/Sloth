@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2554.robot;
 
-import org.usfirst.frc.team2554.robot.triggers.DriveTrigger;
 import org.usfirst.frc.team2554.robot.triggers.JoystickAxis;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -20,9 +19,6 @@ public class OI {
 		public Joystick joystick = new Joystick(1);
 		public double getRawAxis( int axis ) {
 			return joystick.getRawAxis(axis);
-		}
-		public double getAbsRawAxis( int axis ) { 
-			return Math.abs( joystick.getRawAxis(axis) ); 
 		}
 	//Top Bumpers
 		final public int lBumper = 4;
@@ -44,7 +40,6 @@ public class OI {
 	//Triggers
 		Trigger shootingTrigger = new JoystickAxis(controller, rTrigger);
 		Trigger feederTrigger = new JoystickAxis(controller, lTrigger);
-		Trigger driveTrigger = new DriveTrigger(controller);
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
