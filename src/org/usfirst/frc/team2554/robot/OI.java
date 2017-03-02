@@ -21,8 +21,8 @@ public class OI {
 			return joystick.getRawAxis(axis);
 		}
 	//Top Bumpers
-		final public int lBumper = 4;
-		final public int rBumper = 5;
+		final public int rBumper = 6;
+		final public int lBumper = 5;
 	//Top Triggers
 		final public int rTrigger = 3;
 		final public int lTrigger = 2;
@@ -37,6 +37,7 @@ public class OI {
 		//Button objects
 		Button climbButton = new JoystickButton(controller, climb);
 		Button intakeButton = new JoystickButton(controller, rBumper);
+		Button feederBackButton = new JoystickButton(controller, lBumper);
 	//Triggers
 		Trigger shootingTrigger = new JoystickAxis(controller, rTrigger);
 		Trigger feederTrigger = new JoystickAxis(controller, lTrigger);

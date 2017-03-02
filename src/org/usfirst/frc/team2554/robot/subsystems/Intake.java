@@ -18,7 +18,7 @@ public class Intake extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     public void spin(){
-    	intake.set(0.6);
+    	intake.set(0.8);
     }
     public void stop(){
     	intake.set(0);

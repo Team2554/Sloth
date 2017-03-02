@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SpinFeeder extends Command {
+public class SpinFeederForward extends Command {
 
-    public SpinFeeder() {
+    public SpinFeederForward() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.feeder);

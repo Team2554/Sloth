@@ -25,6 +25,7 @@ public class RobotMap {
 	final public static int limitSwitchFeeder = 0;
 	final public static int shooterEncoderA = 1;
 	final public static int shooterEncoderB = 2;
+	final public static int lights = 3;
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;

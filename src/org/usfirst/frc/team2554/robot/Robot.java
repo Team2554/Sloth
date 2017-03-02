@@ -8,19 +8,18 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.ConditionalCommand;
-import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Encoder;
 
 import org.usfirst.frc.team2554.robot.commands.*;
 import org.usfirst.frc.team2554.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
 
 /**
@@ -33,6 +32,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 public class Robot extends IterativeRobot {
 	public double averageXaxisMag, averageYaxisMag, averageZaxisMag;
 	public static final double DEADZONE = 0.15;
+	public static final double MULTIPLIER = 0.5;
 	public static OI oi;
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	public static Feeder feeder = new Feeder();
@@ -40,6 +40,7 @@ public class Robot extends IterativeRobot {
 	public static Intake intake = new Intake();
 	public static Climber climber = new Climber();
 	public static DigitalInput feederSwitch = new DigitalInput(RobotMap.limitSwitchFeeder);
+	public static DigitalOutput lights = new DigitalOutput(RobotMap.lights);
 	public static Encoder shooterEncoder = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB);
 	Command autonomousCommand;
 	public static double Xaxis, Yaxis, Zaxis;
@@ -65,8 +66,9 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		oi.climbButton.whileHeld(new ClimbUp());
 		oi.shootingTrigger.whileActive(new SpinShooter());
-		oi.feederTrigger.whileActive(new SpinFeeder());
+		oi.feederTrigger.whileActive(new SpinFeederForward());
 		oi.intakeButton.whileHeld(new SpinIntake());
+		oi.feederBackButton.whileHeld(new SpinFeederBackward());
 		// oi.driveTrigger.whileActive(new MecaDrive());
 
 		// Tune Numbers
@@ -167,8 +169,16 @@ public class Robot extends IterativeRobot {
 			Zaxis = oi.getRawAxis(2);
 		} else
 			Zaxis = 0.0;
+		
+		if( oi.controller.getRawButton(4) ) {
+//			lights.enablePWM(1);
+//			lights.disablePWM();
+//			lights.set(true);
+			lights.pulse(1);
+			System.out.println( "thanks for nothing dan");
+		}
 
-		myRobot.mecanumDrive_Cartesian(oi.getRawAxis(0), oi.getRawAxis(1), oi.getRawAxis(2), gyro.getAngle());
+		drive(oi.getRawAxis(0) * MULTIPLIER, oi.getRawAxis(1) * MULTIPLIER, oi.getRawAxis(2) * MULTIPLIER);
 
 	}
 
@@ -195,6 +205,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void drive(double x, double y, double rotation) {
-		myRobot.mecanumDrive_Cartesian(x, y, rotation, Robot.gyro.getAngle());
+		myRobot.mecanumDrive_Cartesian(x, y, rotation, 0.0);
 	}
 }
