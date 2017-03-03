@@ -184,9 +184,12 @@ public class Robot extends IterativeRobot {
 			Zaxis = oi.getRawAxis(2);
 		} else
 			Zaxis = 0.0;
-		multiplier = (oi.getRawAxis(3)+1)/2.0;
-		System.out.println(1.0 - multiplier);
+		multiplier = 1.0 - (oi.getRawAxis(3)+1)/2.0;
 		drive(oi.getRawAxis(0) * multiplier, oi.getRawAxis(1) * multiplier, oi.getRawAxis(2) * multiplier);
+		
+		if (oi.joystick.getRawButton(11)){
+			gyro.reset();
+		}
 	}
 
 	/**
