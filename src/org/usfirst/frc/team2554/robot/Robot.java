@@ -2,6 +2,7 @@
 package org.usfirst.frc.team2554.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
@@ -10,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.ConditionalCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -32,7 +34,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 public class Robot extends IterativeRobot {
 	public double averageXaxisMag, averageYaxisMag, averageZaxisMag;
 	public static final double DEADZONE = 0.15;
-	public static final double MULTIPLIER = 0.5;
+	public static double multiplier;
 	public static OI oi;
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	public static Feeder feeder = new Feeder();
@@ -40,8 +42,11 @@ public class Robot extends IterativeRobot {
 	public static Intake intake = new Intake();
 	public static Climber climber = new Climber();
 	public static DigitalInput feederSwitch = new DigitalInput(RobotMap.limitSwitchFeeder);
-	public static DigitalOutput lights = new DigitalOutput(RobotMap.lights);
+	public static Relay lights = new Relay(RobotMap.lights);
 	public static Encoder shooterEncoder = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB);
+	public static LiftTracker lifttracker = new LiftTracker();
+	public static NetworkTable gripTable;
+	public static double rotationValue = 0.0;
 	Command autonomousCommand;
 	public static double Xaxis, Yaxis, Zaxis;
 	// Should not be re-instantiated every time because a thread is created
@@ -64,11 +69,15 @@ public class Robot extends IterativeRobot {
 		myRobot = new RobotDrive(RobotMap.driveTrain[0], RobotMap.driveTrain[1], RobotMap.driveTrain[2],
 				RobotMap.driveTrain[3]);
 		oi = new OI();
+		gripTable = NetworkTable.getTable("GRIP/myContoursReport");
+
+		// BUTTONS
 		oi.climbButton.whileHeld(new ClimbUp());
 		oi.shootingTrigger.whileActive(new SpinShooter());
 		oi.feederTrigger.whileActive(new SpinFeederForward());
 		oi.intakeButton.whileHeld(new SpinIntake());
 		oi.feederBackButton.whileHeld(new SpinFeederBackward());
+		oi.turnCamButton.whenPressed(new RotateRobot());
 		// oi.driveTrigger.whileActive(new MecaDrive());
 
 		// Tune Numbers
@@ -84,6 +93,11 @@ public class Robot extends IterativeRobot {
 		// chooser.addDefault("Default Auto", new DriveTrainDefault());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+		try {
+			SmartDashboard.putNumber("returnWeightedX", lifttracker.returnWeightedX());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		// CHANGE Distance Value
 		shooterEncoder.setDistancePerPulse(1);
 	}
@@ -157,6 +171,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		// myRobot.mecanumDrive_Cartesian(0, 0, 0.5, 0);
 		Scheduler.getInstance().run();
+		lights.set(Relay.Value.kForward);
 		if (Math.abs(oi.getRawAxis(0)) > DEADZONE) {
 			Xaxis = oi.getRawAxis(0);
 		} else
@@ -169,17 +184,9 @@ public class Robot extends IterativeRobot {
 			Zaxis = oi.getRawAxis(2);
 		} else
 			Zaxis = 0.0;
-		
-		if( oi.controller.getRawButton(4) ) {
-//			lights.enablePWM(1);
-//			lights.disablePWM();
-//			lights.set(true);
-			lights.pulse(1);
-			System.out.println( "thanks for nothing dan");
-		}
-
-		drive(oi.getRawAxis(0) * MULTIPLIER, oi.getRawAxis(1) * MULTIPLIER, oi.getRawAxis(2) * MULTIPLIER);
-
+		multiplier = (oi.getRawAxis(3)+1)/2.0;
+		System.out.println(1.0 - multiplier);
+		drive(oi.getRawAxis(0) * multiplier, oi.getRawAxis(1) * multiplier, oi.getRawAxis(2) * multiplier);
 	}
 
 	/**
@@ -205,6 +212,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void drive(double x, double y, double rotation) {
-		myRobot.mecanumDrive_Cartesian(x, y, rotation, 0.0);
+		myRobot.mecanumDrive_Cartesian(x, y, rotation, gyro.getAngle());
 	}
 }
