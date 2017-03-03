@@ -20,7 +20,8 @@ public class AdjustShooter extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.spin(Robot.shooter.getLastestSpeed());
+    	Robot.shooter.spinR(Robot.shooter.getLastestSpeed());
+    	Robot.shooter.spinL(Robot.shooter.getLastestSpeed());
     }
 
     // Make this return true when this Command no longer needs to run execute()

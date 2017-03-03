@@ -26,7 +26,7 @@ public class SpinFeederForward extends Command {
     }
     public void start(){
     	//if(Robot.shooter.onTarget())
-    		Robot.feeder.spin(-0.2);
+    		Robot.feeder.spin(-0.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()

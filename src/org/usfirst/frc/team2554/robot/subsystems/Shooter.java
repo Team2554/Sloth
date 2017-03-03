@@ -53,8 +53,10 @@ public class Shooter extends PIDSubsystem {
     	shooterL.set(speed);
     	shooterR.set(speed);
     }
-    public void spin(double sped){
+    public void spinL(double sped){
     	shooterL.set(sped);
+    }
+    public void spinR(double sped){
     	shooterR.set(sped);
     }
     public void stop(){
