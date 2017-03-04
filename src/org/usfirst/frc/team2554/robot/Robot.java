@@ -173,10 +173,10 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		lights.set(Relay.Value.kOn);
 		
-		if( !oi.controller.getRawButton(oi.rBumper) ) {
-			System.out.println( "thanks for nothing dan");
-			Robot.intake.spin(0.6);
-		}
+//		if( !oi.controller.getRawButton(oi.rBumper) ) {
+//			System.out.println( "thanks for nothing dan");
+//			Robot.intake.spin(0.6);
+//		}
 		
 		multiplier = 1.0 - (oi.getRawAxis(3)+1)/2.0;
 		

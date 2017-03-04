@@ -21,10 +21,11 @@ public class SpinIntake extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.intake.spin(0.6);
     }
     
     public void start(){
-    	Robot.intake.spin(1.0);
+    	Robot.intake.spin(0.6);
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
