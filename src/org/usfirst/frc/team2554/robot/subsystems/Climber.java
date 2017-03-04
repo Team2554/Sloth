@@ -3,7 +3,6 @@ package org.usfirst.frc.team2554.robot.subsystems;
 import org.usfirst.frc.team2554.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
