@@ -6,6 +6,3 @@
 
 ### Controller Input Map
 ![Controller Input Map](gamepad_input.png?raw=true)
-
-### Samarth's Stupid MS Paint Thing
-![Samarth Sucks](samarth.png?raw=true)
