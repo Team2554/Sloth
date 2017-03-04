@@ -24,10 +24,8 @@ public class SpinShooter extends Command {
     protected void execute() {
     }
     public void start(){
-    	Robot.shooter.spinL(-0.9);
-    	Robot.shooter.spinR(-0.8);
-//    	Robot.shooter.spin(-0.95);
-//    	Robot.shooter.spin(-1.00);
+    	Robot.shooter.spinL(-1.0);
+    	Robot.shooter.spinR(-0.75);
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

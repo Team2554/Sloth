@@ -17,8 +17,8 @@ public class Intake extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-    public void spin(){
-    	intake.set(0.8);
+    public void spin(double speed){
+    	intake.set(speed);
     }
     public void stop(){
     	intake.set(0);

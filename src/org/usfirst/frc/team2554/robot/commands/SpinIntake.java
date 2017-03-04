@@ -24,7 +24,7 @@ public class SpinIntake extends Command {
     }
     
     public void start(){
-    	Robot.intake.spin();
+    	Robot.intake.spin(1.0);
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

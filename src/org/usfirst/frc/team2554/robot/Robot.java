@@ -160,6 +160,7 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		gyro.calibrate();
+		myRobot.setSafetyEnabled(false);
 	}
 
 	/**
@@ -169,9 +170,16 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		// myRobot.mecanumDrive_Cartesian(0, 0, 0.5, 0);
 		Scheduler.getInstance().run();
-		lights.set(Relay.Value.kForward);
+		lights.set(Relay.Value.kOn);
+		
+		if( !oi.controller.getRawButton(oi.rBumper) ) {
+			System.out.println( "thanks for nothing dan");
+			Robot.intake.spin(0.6);
+		}
+		
+		multiplier = 1.0 - (oi.getRawAxis(3)+1)/2.0;
+		
 		if (Math.abs(oi.getRawAxis(0)) > DEADZONE) {
 			Xaxis = oi.getRawAxis(0);
 		} else
@@ -181,10 +189,10 @@ public class Robot extends IterativeRobot {
 		} else
 			Yaxis = 0.0;
 		if (Math.abs(oi.getRawAxis(2)) > DEADZONE) {
-			Zaxis = oi.getRawAxis(2);
+			 Zaxis = oi.getRawAxis(2);
 		} else
 			Zaxis = 0.0;
-		multiplier = 1.0 - (oi.getRawAxis(3)+1)/2.0;
+		
 		drive(oi.getRawAxis(0) * multiplier, oi.getRawAxis(1) * multiplier, oi.getRawAxis(2) * multiplier);
 	}
 
