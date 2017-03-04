@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Encoder;
 
 import org.usfirst.frc.team2554.robot.commands.*;
@@ -78,7 +77,7 @@ public class Robot extends IterativeRobot {
 		oi.intakeButton.whileHeld(new SpinIntake());
 		oi.feederBackButton.whileHeld(new SpinFeederBackward());
 		oi.turnCamButton.whenPressed(new RotateRobot());
-		// oi.driveTrigger.whileActive(new MecaDrive());
+		oi.resetGyroButton.whileHeld(new ResetGyro());
 
 		// Tune Numbers
 		adjustShooterConditional = new AdjustShootingConditional(new AdjustShootingGroup());
@@ -160,6 +159,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		gyro.calibrate();
 	}
 
 	/**
@@ -186,10 +186,6 @@ public class Robot extends IterativeRobot {
 			Zaxis = 0.0;
 		multiplier = 1.0 - (oi.getRawAxis(3)+1)/2.0;
 		drive(oi.getRawAxis(0) * multiplier, oi.getRawAxis(1) * multiplier, oi.getRawAxis(2) * multiplier);
-		
-		if (oi.joystick.getRawButton(11)){
-			gyro.reset();
-		}
 	}
 
 	/**
