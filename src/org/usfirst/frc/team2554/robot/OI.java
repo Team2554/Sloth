@@ -42,7 +42,7 @@ public class OI {
 		Button climbButton = new JoystickButton(controller, climb);
 		Button intakeButton = new JoystickButton(controller, rBumper);
 		Button feederBackButton = new JoystickButton(controller, lBumper);
-		Button turnCamButton = new JoystickButton(controller, yButton);
+		Button autoAimButton = new JoystickButton(controller, yButton);
 		Button resetGyroButton = new JoystickButton(joystick, sideButton);
 	//Triggers
 		Trigger shootingTrigger = new JoystickAxis(controller, rTrigger);

@@ -1,15 +1,13 @@
-package org.usfirst.frc.team2554.robot.commands;
+package org.usfirst.frc.team2554.robot.autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
-
-import org.usfirst.frc.team2554.robot.Robot;
 
 /**
  *
  */
-public class ResetGyro extends Command {
+public class DefaultAutonomous extends Command {
 
-    public ResetGyro() {
+    public DefaultAutonomous() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -20,8 +18,6 @@ public class ResetGyro extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.gyro.reset();
-    	System.out.println( "thanks for nothing dan" );
     }
 
     // Make this return true when this Command no longer needs to run execute()

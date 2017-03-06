@@ -76,8 +76,8 @@ public class Robot extends IterativeRobot {
 		oi.feederTrigger.whileActive(new SpinFeederForward());
 		oi.intakeButton.whileHeld(new SpinIntake());
 		oi.feederBackButton.whileHeld(new SpinFeederBackward());
-		oi.turnCamButton.whenPressed(new RotateRobot());
-		oi.resetGyroButton.whileHeld(new ResetGyro());
+		oi.autoAimButton.whenPressed(new RotateRobot());
+		oi.resetGyroButton.whenPressed(new ResetGyro());
 
 		// Tune Numbers
 		adjustShooterConditional = new AdjustShootingConditional(new AdjustShootingGroup());
@@ -192,8 +192,10 @@ public class Robot extends IterativeRobot {
 			 Zaxis = oi.getRawAxis(2);
 		} else
 			Zaxis = 0.0;
-		
-		drive(oi.getRawAxis(0) * multiplier, oi.getRawAxis(1) * multiplier, oi.getRawAxis(2) * multiplier);
+		if(oi.autoAimButton.get())
+			drive(Xaxis * multiplier, Yaxis * multiplier, rotationValue);
+		else
+			drive(Xaxis * multiplier, Yaxis * multiplier, Zaxis * multiplier);
 	}
 
 	/**

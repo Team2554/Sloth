@@ -8,7 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class RotateRobot extends Command {
-
+	//Check the center pixel. Either 320 or 0
+	//Camera is 640 x 480
+	double center = 320;
     public RotateRobot() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -18,11 +20,30 @@ public class RotateRobot extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     }
-
+    
+    public void start(){
+    	double pos = Robot.lifttracker.returnWeightedX();
+    	
+    	if(pos > center)
+    		Robot.rotationValue = 0.5;
+    	else if(pos < center)
+    		Robot.rotationValue = -0.5;
+    	else
+    		Robot.rotationValue = 0;
+    }
+    public void cancel(){
+    	Robot.rotationValue = 0;
+    }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double pos = Robot.lifttracker.returnWeightedX();
-    	Robot.rotationValue = pos;
+    	
+    	if(pos > center)
+    		Robot.rotationValue = 0.5;
+    	else if(pos < center)
+    		Robot.rotationValue = -0.5;
+    	else
+    		Robot.rotationValue = 0;
     }
 
     // Make this return true when this Command no longer needs to run execute()
