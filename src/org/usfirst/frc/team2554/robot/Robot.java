@@ -131,13 +131,6 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		autonomousCommand = chooser.getSelected();
 
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -172,14 +165,13 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		lights.set(Relay.Value.kOn);
-		
-//		if( !oi.controller.getRawButton(oi.rBumper) ) {
-//			System.out.println( "thanks for nothing dan");
-//			Robot.intake.spin(0.6);
-//		}
-		
-		multiplier = 1.0 - (oi.getRawAxis(3)+1)/2.0;
-		
+
+		// if( !oi.controller.getRawButton(oi.rBumper) ) {
+		// System.out.println( "thanks for nothing dan");
+		// Robot.intake.spin(0.6);
+		// }
+
+		multiplier = 1.0 - (oi.getRawAxis(3) + 1) / 2.0;
 		if (Math.abs(oi.getRawAxis(0)) > DEADZONE) {
 			Xaxis = oi.getRawAxis(0);
 		} else
@@ -189,11 +181,14 @@ public class Robot extends IterativeRobot {
 		} else
 			Yaxis = 0.0;
 		if (Math.abs(oi.getRawAxis(2)) > DEADZONE) {
-			 Zaxis = oi.getRawAxis(2);
+			Zaxis = oi.getRawAxis(2);
 		} else
 			Zaxis = 0.0;
-		
-		drive(oi.getRawAxis(0) * multiplier, oi.getRawAxis(1) * multiplier, oi.getRawAxis(2) * multiplier);
+		if (oi.joystick.getRawButton(oi.sideButton1))
+			myRobot.mecanumDrive_Cartesian(oi.getRawAxis(0) * multiplier, oi.getRawAxis(1) * multiplier,
+					oi.getRawAxis(2) * multiplier, 0.0);
+		else
+			drive(oi.getRawAxis(0) * multiplier, oi.getRawAxis(1) * multiplier, oi.getRawAxis(2) * multiplier);
 	}
 
 	/**
@@ -210,7 +205,7 @@ public class Robot extends IterativeRobot {
 		return false;
 	}
 
-	public int checkSign(double checkNum) {
+	public static int checkSign(double checkNum) {
 		if (checkNum < 0)
 			return -1;
 		if (checkNum > 0)

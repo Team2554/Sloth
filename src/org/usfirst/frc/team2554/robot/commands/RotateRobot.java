@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class RotateRobot extends Command {
-
+	
     public RotateRobot() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -22,7 +22,8 @@ public class RotateRobot extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double pos = Robot.lifttracker.returnWeightedX();
-    	Robot.rotationValue = pos;
+    	Robot.rotationValue = Robot.checkSign(pos)/2.0;
+    	System.out.println( "returnWeightedX" + Robot.lifttracker.returnWeightedX() );
     }
 
     // Make this return true when this Command no longer needs to run execute()
