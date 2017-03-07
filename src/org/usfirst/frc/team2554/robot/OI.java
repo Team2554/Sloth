@@ -20,59 +20,31 @@ public class OI {
 		public double getRawAxis( int axis ) {
 			return joystick.getRawAxis(axis);
 		}
-	//Buttons on Joystick
-		final public int sideButton7 = 7;
-		final public int sideButton11 = 11;
 	//Face Buttons
+		final private int aButton = 1;
 		final public int yButton = 4;
-	//Top Bumpers
+	//Bumpers and Triggers
 		final public int rBumper = 6;
 		final public int lBumper = 5;
-	//Top Triggers
 		final public int rTrigger = 3;
 		final public int lTrigger = 2;
-	//Mapping of the Axis on the Joystick
+	//Joystick
+		//Buttons
+		final public int sideButton7 = 7;
+		final public int sideButton11 = 11;
+		//Axes
 		final public int stickLeftX = 0;
 		final public int stickLeftY = 1;
 		final public int stickRightX = 4;
 		final public int stickRightY = 5;
 	//Buttons
-		//Button Locations
-		final private int aButton = 1;
-		//Button objects
 		Button climbButton = new JoystickButton(controller, aButton);
 		Button intakeButton = new JoystickButton(controller, rBumper);
 		Button feederBackButton = new JoystickButton(controller, lBumper);
 		Button turnCamButton = new JoystickButton(controller, yButton);
-		Button resetGyroButton = new JoystickButton(joystick, sideButton11);
+		Button resetGyroButton = new JoystickButton(joystick, sideButton11); //unused because it doesn't call a command
+		Button noGyroButton = new JoystickButton(joystick, sideButton7); //unused because it doesn't call a command
 	//Triggers
 		Trigger shootingTrigger = new JoystickAxis(controller, rTrigger);
 		Trigger feederTrigger = new JoystickAxis(controller, lTrigger);
-	//// CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	//// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
-
-	// There are a few additional built in buttons you can use. Additionally,
-	// by subclassing Button you can create custom triggers and bind those to
-	// commands the same as any other Button.
-
-	//// TRIGGERING COMMANDS WITH BUTTONS
-	// Once you have a button, it's trivial to bind it to a button in one of
-	// three ways:
-
-	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new ExampleCommand());
-
-	// Run the command while the button is being held down and interrupt it once
-	// the button is released.
-	// button.whileHeld(new ExampleCommand());
-
-	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenReleased(new ExampleCommand());
 }
