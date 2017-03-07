@@ -77,7 +77,7 @@ public class Robot extends IterativeRobot {
 		oi.intakeButton.whileHeld(new SpinIntake());
 		oi.feederBackButton.whileHeld(new SpinFeederBackward());
 		oi.turnCamButton.whenPressed(new RotateRobot());
-		oi.resetGyroButton.whileHeld(new ResetGyro());
+		//oi.resetGyroButton.whileHeld(new ResetGyro()); dunno why this is broken
 
 		// Tune Numbers
 		adjustShooterConditional = new AdjustShootingConditional(new AdjustShootingGroup());
@@ -184,7 +184,9 @@ public class Robot extends IterativeRobot {
 			Zaxis = oi.getRawAxis(2);
 		} else
 			Zaxis = 0.0;
-		if (oi.joystick.getRawButton(oi.sideButton1))
+		if (oi.joystick.getRawButton(oi.sideButton11))
+			gyro.reset();
+		if (oi.joystick.getRawButton(oi.sideButton7)) //gyro-less driving while button 7 is held
 			myRobot.mecanumDrive_Cartesian(oi.getRawAxis(0) * multiplier, oi.getRawAxis(1) * multiplier,
 					oi.getRawAxis(2) * multiplier, 0.0);
 		else
