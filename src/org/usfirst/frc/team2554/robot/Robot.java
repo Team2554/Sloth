@@ -48,7 +48,6 @@ public class Robot extends IterativeRobot {
 	public static double rotationValue = 0.0;
 	Command autonomousCommand;
 	public static double Xaxis, Yaxis, Zaxis;
-	// Should not be re-instantiated every time because a thread is created
 	PIDController encoderController;
 	Encoder encoder;
 	Victor output;
@@ -166,31 +165,24 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		lights.set(Relay.Value.kOn);
 
-		// if( !oi.controller.getRawButton(oi.rBumper) ) {
-		// System.out.println( "thanks for nothing dan");
-		// Robot.intake.spin(0.6);
-		// }
-
 		multiplier = 1.0 - (oi.getRawAxis(3) + 1) / 2.0;
-		if (Math.abs(oi.getRawAxis(0)) > DEADZONE) {
+		if (isNotDeadzone(oi.getRawAxis(0)))
 			Xaxis = oi.getRawAxis(0);
-		} else
+		else
 			Xaxis = 0.0;
-		if (Math.abs(oi.getRawAxis(1)) > DEADZONE) {
+		if (isNotDeadzone(oi.getRawAxis(1)))
 			Yaxis = oi.getRawAxis(1);
-		} else
+		else
 			Yaxis = 0.0;
-		if (Math.abs(oi.getRawAxis(2)) > DEADZONE) {
+		if (isNotDeadzone(oi.getRawAxis(2)))
 			Zaxis = oi.getRawAxis(2);
-		} else
+		else
 			Zaxis = 0.0;
+		
 		if (oi.joystick.getRawButton(oi.sideButton11))
 			gyro.reset();
-		if (oi.joystick.getRawButton(oi.sideButton7)) //gyro-less driving while button 7 is held
-			myRobot.mecanumDrive_Cartesian(oi.getRawAxis(0) * multiplier, oi.getRawAxis(1) * multiplier,
-					oi.getRawAxis(2) * multiplier, 0.0);
-		else
-			drive(oi.getRawAxis(0) * multiplier, oi.getRawAxis(1) * multiplier, oi.getRawAxis(2) * multiplier);
+		//gyro-less drive when button 7 is held
+		drive( oi.getRawAxis(0), oi.getRawAxis(1), oi.getRawAxis(2), multiplier, !oi.joystick.getRawButton(oi.sideButton7));
 	}
 
 	/**
@@ -202,7 +194,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public static boolean isNotDeadzone(double value) {
-		if (value > Robot.DEADZONE || value < -Robot.DEADZONE)
+		if( Math.abs(value) > Robot.DEADZONE)
 			return true;
 		return false;
 	}
@@ -215,7 +207,12 @@ public class Robot extends IterativeRobot {
 		return 0;
 	}
 
-	public void drive(double x, double y, double rotation) {
-		myRobot.mecanumDrive_Cartesian(x, y, rotation, gyro.getAngle());
+	public void drive(double x, double y, double rotation, double multiplier, boolean isGyro) {
+		if( isGyro )
+			myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, gyro.getAngle());
+		else if( !isGyro )
+			myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, 0);
+		else
+			return;
 	}
 }
