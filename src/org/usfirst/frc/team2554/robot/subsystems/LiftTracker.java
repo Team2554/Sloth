@@ -20,7 +20,7 @@ public class LiftTracker extends Subsystem {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 	}
-
+/*
 	public void updateTable() {
 		x = gripTable.getNumberArray("centerX", defaultArray);
 		y = gripTable.getNumberArray("centerY", defaultArray);
@@ -73,5 +73,5 @@ public class LiftTracker extends Subsystem {
 	public boolean isCentered(){
 		//Change deadzone
 		return returnWeightedX() < (center+10) && returnWeightedX() > (center - 10);
-	}
+	}*/
 }

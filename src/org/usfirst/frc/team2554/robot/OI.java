@@ -22,6 +22,7 @@ public class OI {
 		}
 	//Face Buttons
 		final private int aButton = 1;
+		final public static int bButton = 2;
 		final public int yButton = 4;
 	//Bumpers and Triggers
 		final public int rBumper = 6;

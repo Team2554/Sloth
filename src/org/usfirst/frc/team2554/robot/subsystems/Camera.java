@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj.CameraServer;
  *
  */
 public class Camera extends Subsystem {
-	UsbCamera shooterCam = new UsbCamera("sCam",  0);
-	UsbCamera pickUpCam = new UsbCamera("pCam", 1);
-	CvSink shooterSink, pickUpSink;
-	CvSource outputSource;
-	boolean shooterBool = true;
+	private UsbCamera shooterCam = new UsbCamera("cam2", 3);
+	private UsbCamera pickUpCam = new UsbCamera("cam0", 2);
+	private CvSink shooterSink, pickUpSink;
+	private CvSource outputSource;
+	private boolean shooterBool = true;
 	Mat image;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -25,6 +25,13 @@ public class Camera extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new SetUpCamera());
+    }
+    /*
+    public void Camera(){
+    	setUpCamera();
+    	setUpCamServer();
+  //  	createSinks();
+    //	createSource();
     }
     public void setUpCamera(){
     	shooterCam.setBrightness(0);
@@ -36,15 +43,18 @@ public class Camera extends Subsystem {
     	CameraServer.getInstance().addCamera(shooterCam);
     	CameraServer.getInstance().addCamera(pickUpCam);
     }
+    
     public void createSinks(){
-    	shooterSink = CameraServer.getInstance().getVideo(shooterCam);
     	pickUpSink = CameraServer.getInstance().getVideo(pickUpCam);
+    	pickUpSink.setEnabled(false);
+    	shooterSink = CameraServer.getInstance().getVideo(shooterCam);
+    	shooterSink.setEnabled(false);
     	shooterSink.setEnabled(shooterBool);
     	pickUpSink.setEnabled(!shooterBool);
     }
     public void createSource(){
     	//Change resolution
-    	CameraServer.getInstance().putVideo("Dashboard Viewer", 480, 640);
+    	CameraServer.getInstance().putVideo("Dashboard Viewer", 640, 480);
     }
     public void switchCam(){
     	shooterBool = !shooterBool;
@@ -56,11 +66,10 @@ public class Camera extends Subsystem {
     		shooterSink.grabFrame(image);
     	else
     		pickUpSink.grabFrame(image);
-    		
     }
     public void outputVideo(){
     	grabImage();
     	outputSource.putFrame(image);
-    }
+    }*/
     
 }

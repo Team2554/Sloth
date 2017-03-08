@@ -18,9 +18,9 @@ public class SetUpCamera extends InstantCommand {
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.camera.setUpCamServer();
+    /*	Robot.camera.setUpCamServer();
     	Robot.camera.createSinks();
-    	Robot.camera.createSource();
+    	Robot.camera.createSource(); */
     }
 
 }

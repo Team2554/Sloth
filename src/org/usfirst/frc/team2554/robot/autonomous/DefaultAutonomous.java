@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.Timer;
  *
  */
 public class DefaultAutonomous extends Command {
-	RobotDrive myRobot = new RobotDrive(RobotMap.driveTrain[0], RobotMap.driveTrain[1], RobotMap.driveTrain[2], RobotMap.driveTrain[3]);
+//	RobotDrive myRobot = new RobotDrive(RobotMap.driveTrain[0], RobotMap.driveTrain[1], RobotMap.driveTrain[2], RobotMap.driveTrain[3]);
     Timer timer = new Timer();
 	public DefaultAutonomous() {
         // Use requires() here to declare subsystem dependencies
@@ -22,7 +22,7 @@ public class DefaultAutonomous extends Command {
     protected void initialize() {
     	timer.reset();
     	timer.start();
-    	myRobot.drive(0,0);
+  //  	myRobot.drive(0,0);
     	
     }
 
@@ -37,13 +37,13 @@ public class DefaultAutonomous extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	myRobot.drive(0, 0);
+  //  	myRobot.drive(0, 0);
     	timer.stop();
     }
     
     // Called once this Command is canceled
     public void cancel(){
-    	myRobot.drive(0, 0);
+    //	myRobot.drive(0, 0);
     	timer.stop();
     }
     // Called when another command which requires one or more of the same

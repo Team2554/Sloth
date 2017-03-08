@@ -24,7 +24,7 @@ public class RotateRobot extends Command {
     }
     
     public void start(){
-    	double pos = Robot.liftTracker.returnWeightedX();
+    	double pos = 0;//Robot.liftTracker.returnWeightedX();
     	
     	if(pos > center)
     		Robot.rotationValue = 0.5;
@@ -38,14 +38,14 @@ public class RotateRobot extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double pos = Robot.liftTracker.returnWeightedX();
+    	double pos =0;//Robot.liftTracker.returnWeightedX();
     	Robot.rotationValue = Robot.checkSign(pos)/2.0;
-    	System.out.println( "returnWeightedX" + Robot.liftTracker.returnWeightedX() );
+    	//System.out.println( "returnWeightedX" + Robot.liftTracker.returnWeightedX() );
 }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	double pos = Robot.liftTracker.returnWeightedX();
+    	double pos = 0;//Robot.liftTracker.returnWeightedX();
     	if( pos < 0.05 && pos > -0.05 )
     		return true;
         return false;

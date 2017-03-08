@@ -93,7 +93,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Center Gear", new CenterGearAutonomous());
 		SmartDashboard.putData("Auto mode", chooser);
 		try {
-			SmartDashboard.putNumber("returnWeightedX", liftTracker.returnWeightedX());
+	//		SmartDashboard.putNumber("returnWeightedX", liftTracker.returnWeightedX());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -164,7 +164,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		camera.outputVideo();
+/*		camera.outputVideo();
+		if(oi.joystick.getRawButton(oi.bButton))
+			camera.switchCam();*/
 		multiplier = 1.0 - (oi.getRawAxis(3) + 1) / 2.0;
 		if (isNotDeadzone(oi.getRawAxis(0)))
 			Xaxis = oi.getRawAxis(0);
@@ -180,8 +182,10 @@ public class Robot extends IterativeRobot {
 			Zaxis = 0.0;
 		//gyro-less drive when button 7 is held
 		drive( oi.getRawAxis(0), oi.getRawAxis(1), oi.getRawAxis(2), multiplier, !oi.joystick.getRawButton(oi.sideButton7));
-		if(liftTracker.isCentered())
+	/*	if(liftTracker.isCentered())
 			lights.set(Relay.Value.kOn);
+		else
+			lights.set(Relay.Value.kOff);*/
 	}
 
 	/**
