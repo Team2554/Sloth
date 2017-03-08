@@ -21,9 +21,9 @@
 
   <!-- Any other property in build.properties can also be overridden. -->
 
-  <property file="${user.home}/wpilib/wpilib.properties"/>
+  <property file="${user.home}/build/Team2554/Sloth/wpilib/wpilib.properties"/>
   <property file="build.properties"/>
-  <property file="${user.home}/wpilib/java/${version}/ant/build.properties"/>
+  <property file="${user.home}/build/Team2554/Sloth/wpilib/java/${version}/ant/build.properties"/>
 
   <import file="${user.home}/build/Team2554/Sloth/wpilib/ant/build.xml"/>
 
