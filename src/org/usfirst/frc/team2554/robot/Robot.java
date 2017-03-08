@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 
+import org.usfirst.frc.team2554.robot.autonomous.*;
 import org.usfirst.frc.team2554.robot.commands.*;
 import org.usfirst.frc.team2554.robot.subsystems.*;
 
@@ -43,8 +44,9 @@ public class Robot extends IterativeRobot {
 	public static DigitalInput feederSwitch = new DigitalInput(RobotMap.limitSwitchFeeder);
 	public static Relay lights = new Relay(RobotMap.lights);
 	public static Encoder shooterEncoder = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB);
-	public static LiftTracker lifttracker = new LiftTracker();
+	public static LiftTracker liftTracker = new LiftTracker();
 	public static NetworkTable gripTable;
+	public static Camera camera = new Camera();
 	public static double rotationValue = 0.0;
 	Command autonomousCommand;
 	public static double Xaxis, Yaxis, Zaxis;
@@ -76,10 +78,9 @@ public class Robot extends IterativeRobot {
 		oi.intakeButton.whileHeld(new SpinIntake());
 		oi.feederBackButton.whileHeld(new SpinFeederBackward());
 		oi.turnCamButton.whenPressed(new RotateRobot());
-		//oi.resetGyroButton.whileHeld(new ResetGyro()); dunno why this is broken
-
-		// Tune Numbers
+		oi.resetGyroButton.whenPressed(new ResetGyro());
 		adjustShooterConditional = new AdjustShootingConditional(new AdjustShootingGroup());
+		// Tune numbers
 		// output = new Victor(0);
 		// encoderController = new PIDController(0,0,0,shooterEncoder, output);
 		// encoderController.setPercentTolerance(15);
@@ -88,11 +89,11 @@ public class Robot extends IterativeRobot {
 		// LiveWindow.addActuator("Test", "PID", encoderController);
 		// LiveWindow.addSensor("hi", "hi", shooterEncoder);
 		LiveWindow.addSensor("hi", "hi", gyro);
-		// chooser.addDefault("Default Auto", new DriveTrainDefault());
-		// chooser.addObject("My Auto", new MyAutoCommand());
+		chooser.addDefault("Default Auto", new DefaultAutonomous());
+		chooser.addObject("Center Gear", new CenterGearAutonomous());
 		SmartDashboard.putData("Auto mode", chooser);
 		try {
-			SmartDashboard.putNumber("returnWeightedX", lifttracker.returnWeightedX());
+			SmartDashboard.putNumber("returnWeightedX", liftTracker.returnWeightedX());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -128,6 +129,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		gyro.calibrate();
 		autonomousCommand = chooser.getSelected();
 
 		// schedule the autonomous command (example)
@@ -151,7 +153,6 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		gyro.calibrate();
 		myRobot.setSafetyEnabled(false);
 	}
 
@@ -163,8 +164,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		lights.set(Relay.Value.kOn);
-
+		camera.outputVideo();
 		multiplier = 1.0 - (oi.getRawAxis(3) + 1) / 2.0;
 		if (isNotDeadzone(oi.getRawAxis(0)))
 			Xaxis = oi.getRawAxis(0);
@@ -178,11 +178,10 @@ public class Robot extends IterativeRobot {
 			Zaxis = oi.getRawAxis(2);
 		else
 			Zaxis = 0.0;
-		
-		if (oi.joystick.getRawButton(oi.sideButton11))
-			gyro.reset();
 		//gyro-less drive when button 7 is held
 		drive( oi.getRawAxis(0), oi.getRawAxis(1), oi.getRawAxis(2), multiplier, !oi.joystick.getRawButton(oi.sideButton7));
+		if(liftTracker.isCentered())
+			lights.set(Relay.Value.kOn);
 	}
 
 	/**
@@ -210,9 +209,7 @@ public class Robot extends IterativeRobot {
 	public void drive(double x, double y, double rotation, double multiplier, boolean isGyro) {
 		if( isGyro )
 			myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, gyro.getAngle());
-		else if( !isGyro )
-			myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, 0);
 		else
-			return;
+			myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, 0);
 	}
 }

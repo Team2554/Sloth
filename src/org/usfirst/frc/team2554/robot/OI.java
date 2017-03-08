@@ -30,6 +30,8 @@ public class OI {
 		final public int lTrigger = 2;
 	//Joystick
 		//Buttons
+			//Check number and if is button
+		final public int triggerButton = 1;
 		final public int sideButton7 = 7;
 		final public int sideButton11 = 11;
 		//Axes
@@ -40,10 +42,10 @@ public class OI {
 	//Buttons
 		Button climbButton = new JoystickButton(controller, aButton);
 		Button intakeButton = new JoystickButton(controller, rBumper);
+		Button switchCamButton = new JoystickButton(joystick, triggerButton);
 		Button feederBackButton = new JoystickButton(controller, lBumper);
 		Button turnCamButton = new JoystickButton(controller, yButton);
-		Button resetGyroButton = new JoystickButton(joystick, sideButton11); //unused because it doesn't call a command
-		Button noGyroButton = new JoystickButton(joystick, sideButton7); //unused because it doesn't call a command
+		Button resetGyroButton = new JoystickButton(joystick, sideButton11);
 	//Triggers
 		Trigger shootingTrigger = new JoystickAxis(controller, rTrigger);
 		Trigger feederTrigger = new JoystickAxis(controller, lTrigger);

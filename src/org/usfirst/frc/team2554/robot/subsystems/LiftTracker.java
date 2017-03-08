@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;;
 public class LiftTracker extends Subsystem {
 	NetworkTable gripTable = Robot.gripTable;
 	private double[] x, y, area, defaultArray = new double[0];
+	//Check if 0 or 320
+	private double center = 320;
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
@@ -67,5 +69,9 @@ public class LiftTracker extends Subsystem {
 		for (double element : y)
 			averageY += element;
 		return averageY / y.length;
+	}
+	public boolean isCentered(){
+		//Change deadzone
+		return returnWeightedX() < (center+10) && returnWeightedX() > (center - 10);
 	}
 }
