@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2554.robot.subsystems;
 
 import org.opencv.core.Mat;
-import org.usfirst.frc.team2554.robot.commands.SetUpCamera;
+import org.usfirst.frc.team2554.robot.Robot;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.CameraServer;
  *
  */
 public class Camera extends Subsystem {
-	UsbCamera shooterCam = new UsbCamera("sCam",  0);
-	UsbCamera pickUpCam = new UsbCamera("pCam", 1);
+	UsbCamera gearCam = new UsbCamera("cam2",  0);
+	UsbCamera pickUpCam = new UsbCamera("cam0", 1);
 	CvSink shooterSink, pickUpSink;
 	CvSource outputSource;
 	boolean shooterBool = true;
@@ -21,23 +21,28 @@ public class Camera extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
+	public Camera(){
+		super();
+		setUpCamServer();
+    	createSinks();
+    	createSource();
+	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new SetUpCamera());
     }
     public void setUpCamera(){
-    	shooterCam.setBrightness(0);
-    	shooterCam.setExposureManual(0);
+    	gearCam.setBrightness(0);
+    	gearCam.setExposureManual(0);
     	pickUpCam.setBrightness(0);
     	pickUpCam.setExposureManual(0);
     }
     public void setUpCamServer(){
-    	CameraServer.getInstance().addCamera(shooterCam);
+    	CameraServer.getInstance().addCamera(gearCam);
     	CameraServer.getInstance().addCamera(pickUpCam);
     }
     public void createSinks(){
-    	shooterSink = CameraServer.getInstance().getVideo(shooterCam);
+    	shooterSink = CameraServer.getInstance().getVideo(gearCam);
     	pickUpSink = CameraServer.getInstance().getVideo(pickUpCam);
     	shooterSink.setEnabled(shooterBool);
     	pickUpSink.setEnabled(!shooterBool);
