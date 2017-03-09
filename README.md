@@ -1,8 +1,9 @@
 # Sloth
 
-### TODO
-1. Make the shooter a PID loop that controls the value going to the motor. It needs to be activated when you hit one of the buttons and goes to a certain speed based on the speed that the encoder returns.
-2. Alignment. GRIP will output some value to NetworkTables, we only need to send the X coordinate to turn towards it. Figure out how off-center that value is and plug it into a PID loop and output as rotation (MecanumDrive_Polar()).
+### Something's not working! What do I do!?
+1. Make sure the controller is on port 0 and the joystick is on port 1 in the driver station.
+2. If you aren't getting comms, try restarting everything; we've also noticed that connecting to the robot using USB and disconnecting after a while makes stuff work.
+3. Make sure you have the latest version of the robot code from this Github repository.
 
 ### Controller Input Map
 ![Controller Input Map](gamepad_input.png?raw=true)
