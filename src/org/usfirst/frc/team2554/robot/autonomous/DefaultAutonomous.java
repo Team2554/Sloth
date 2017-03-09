@@ -10,11 +10,12 @@ import edu.wpi.first.wpilibj.Timer;
  *
  */
 public class DefaultAutonomous extends Command {
-	RobotDrive myRobot = new RobotDrive(RobotMap.driveTrain[0], RobotMap.driveTrain[1], RobotMap.driveTrain[2], RobotMap.driveTrain[3]);
+	RobotDrive myRobot;
     Timer timer = new Timer();
-	public DefaultAutonomous() {
+	public DefaultAutonomous(RobotDrive robot) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+		myRobot = robot;
     
     }
 

@@ -10,11 +10,12 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class CenterGearAutonomous extends Command {
-	RobotDrive myRobot = new RobotDrive(RobotMap.driveTrain[0], RobotMap.driveTrain[1], RobotMap.driveTrain[2], RobotMap.driveTrain[3]);
+	RobotDrive myRobot;
     Timer timer = new Timer();
-    public CenterGearAutonomous() {
+    public CenterGearAutonomous(RobotDrive robot) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	myRobot = robot;
     }
 
     // Called just before this Command runs the first time
