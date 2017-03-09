@@ -58,7 +58,6 @@ public class Robot extends IterativeRobot {
 	public static ConditionalCommand adjustShooterConditional;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	public static Timer timer = new Timer();
-	CameraServer cs;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -132,6 +131,7 @@ public class Robot extends IterativeRobot {
 		gyro.calibrate();
 		autonomousCommand = chooser.getSelected();
 
+		
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -147,6 +147,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+		gyro.calibrate();
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove

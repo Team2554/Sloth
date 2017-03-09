@@ -11,8 +11,8 @@ public class RobotMap {
 	//Front Left, Back Left, Front Right, Back Right
 	final public static int driveTrain[] = {0,1,4,3};
 	//Arbitrary Numbers
-	final public static int shooterL = 5; //bottom shooter 
-	final public static int shooterR = 6; //upper shooter
+	final public static int shooterL = 6; //bottom shooter 
+	final public static int shooterR = 5; //upper shooter
 	final public static int intake = 7;
 	final public static int hopper = 8;
 	final public static int climber = 9; //this is a spark
