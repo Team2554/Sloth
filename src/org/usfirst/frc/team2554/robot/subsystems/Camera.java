@@ -1,7 +1,8 @@
 package org.usfirst.frc.team2554.robot.subsystems;
 
 import org.opencv.core.Mat;
-import org.usfirst.frc.team2554.robot.commands.SetUpCamera;
+import org.usfirst.frc.team2554.robot.RobotMap;
+
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
@@ -12,11 +13,11 @@ import edu.wpi.first.wpilibj.CameraServer;
  *
  */
 public class Camera extends Subsystem {
-	private UsbCamera shooterCam = new UsbCamera("cam2", 3);
-	private UsbCamera pickUpCam = new UsbCamera("cam0", 2);
+	public Camera(){}
+	/*private UsbCamera shooterCam;
+	private UsbCamera pickUpCam ;
 	private CvSink shooterSink, pickUpSink;
-	private CvSource outputSource;
-	private boolean shooterBool = true;
+	private boolean shooterBool;
 	Mat image;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -24,37 +25,40 @@ public class Camera extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new SetUpCamera());
     }
-    /*
-    public void Camera(){
+  
+    public Camera(){
+    	shooterCam   = new UsbCamera("cam2", 3);
+    	pickUpCam= new UsbCamera("cam0", 2);
     	setUpCamera();
+    	shooterBool = true;
     	setUpCamServer();
-  //  	createSinks();
-    //	createSource();
+    	createSinks();
+    	createSource();
     }
     public void setUpCamera(){
+    	shooterCam.setResolution(640, 480);
+    	pickUpCam.setResolution(640, 480);
     	shooterCam.setBrightness(0);
     	shooterCam.setExposureManual(0);
     	pickUpCam.setBrightness(0);
     	pickUpCam.setExposureManual(0);
+    	image = new Mat();
     }
     public void setUpCamServer(){
-    	CameraServer.getInstance().addCamera(shooterCam);
-    	CameraServer.getInstance().addCamera(pickUpCam);
-    }
-    
-    public void createSinks(){
     	pickUpSink = CameraServer.getInstance().getVideo(pickUpCam);
     	pickUpSink.setEnabled(false);
     	shooterSink = CameraServer.getInstance().getVideo(shooterCam);
     	shooterSink.setEnabled(false);
+    }
+    
+    public void createSinks(){
     	shooterSink.setEnabled(shooterBool);
     	pickUpSink.setEnabled(!shooterBool);
     }
     public void createSource(){
     	//Change resolution
-    	CameraServer.getInstance().putVideo("Dashboard Viewer", 640, 480);
+//    	CameraServer.getInstance().putVideo("DanxKelly", 640, 480);
     }
     public void switchCam(){
     	shooterBool = !shooterBool;
@@ -69,7 +73,9 @@ public class Camera extends Subsystem {
     }
     public void outputVideo(){
     	grabImage();
-    	outputSource.putFrame(image);
-    }*/
+    	RobotMap.danxKelly.putFrame(image);
+    }
     
+
+*/	protected void initDefaultCommand(){}
 }

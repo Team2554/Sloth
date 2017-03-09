@@ -1,5 +1,8 @@
 package org.usfirst.frc.team2554.robot;
 
+import edu.wpi.cscore.CvSource;
+import edu.wpi.first.wpilibj.CameraServer;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -26,6 +29,10 @@ public class RobotMap {
 	final public static int shooterEncoderA = 1;
 	final public static int shooterEncoderB = 2;
 	final public static int lights = 0;
+	
+	//Camera
+	public static CvSource danxKelly = CameraServer.getInstance().putVideo("DanxKelly", 640, 480);
+	
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;

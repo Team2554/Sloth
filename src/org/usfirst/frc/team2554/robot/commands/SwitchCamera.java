@@ -13,12 +13,12 @@ public class SwitchCamera extends InstantCommand {
         super();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.camera);
+       requires(Robot.camera);
     }
 
     // Called once when the command executes
     protected void initialize() {
-   // 	Robot.camera.switchCam();
+  //	Robot.camera.switchCam();
     }
 
 }

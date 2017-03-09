@@ -46,7 +46,7 @@ public class Robot extends IterativeRobot {
 	public static Encoder shooterEncoder = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB);
 	public static LiftTracker liftTracker = new LiftTracker();
 	public static NetworkTable gripTable;
-	public static Camera camera = new Camera();
+	public static Camera camera;
 	public static double rotationValue = 0.0;
 	Command autonomousCommand;
 	public static double Xaxis, Yaxis, Zaxis;
@@ -65,11 +65,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		CameraServer.getInstance().startAutomaticCapture(0);
+		CameraServer.getInstance().startAutomaticCapture(1);
 		myRobot = new RobotDrive(RobotMap.driveTrain[0], RobotMap.driveTrain[1], RobotMap.driveTrain[2],
 				RobotMap.driveTrain[3]);
 		oi = new OI();
 		gripTable = NetworkTable.getTable("GRIP/myContoursReport");
-
+		camera = new Camera();
 		// BUTTONS
 		oi.climbButton.whileHeld(new ClimbUp());
 		oi.shootingTrigger.whileActive(new SpinShooter());
@@ -87,7 +89,7 @@ public class Robot extends IterativeRobot {
 		// encoderController.setOutputRange(-1, 1);
 		// LiveWindow.addActuator("Test", "PID", encoderController);
 		// LiveWindow.addSensor("hi", "hi", shooterEncoder);
-		LiveWindow.addSensor("hi", "hi", gyro);
+	//	LiveWindow.addSensor("hi", "hi", gyro);
 		chooser.addDefault("Default Auto", new DefaultAutonomous());
 		chooser.addObject("Center Gear", new CenterGearAutonomous());
 		SmartDashboard.putData("Auto mode", chooser);
@@ -165,9 +167,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-/*		camera.outputVideo();
-		if(oi.joystick.getRawButton(oi.bButton))
-			camera.switchCam();*/
+	//	camera.outputVideo();
+	//	if(oi.joystick.getRawButton(oi.bButton))
+	//		camera.switchCam();
 		multiplier = 1.0 - (oi.getRawAxis(3) + 1) / 2.0;
 		if (isNotDeadzone(oi.getRawAxis(0)))
 			Xaxis = oi.getRawAxis(0);
