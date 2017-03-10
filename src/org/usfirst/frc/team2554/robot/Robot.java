@@ -90,8 +90,8 @@ public class Robot extends IterativeRobot {
 		// LiveWindow.addActuator("Test", "PID", encoderController);
 		// LiveWindow.addSensor("hi", "hi", shooterEncoder);
 	//	LiveWindow.addSensor("hi", "hi", gyro);
-		chooser.addDefault("Default Auto", new DefaultAutonomous());
-		chooser.addObject("Center Gear", new CenterGearAutonomous());
+		chooser.addDefault("Default Auto", new DefaultAutonomous(myRobot));
+		chooser.addObject("Center Gear", new CenterGearAutonomous(myRobot));
 		SmartDashboard.putData("Auto mode", chooser);
 		try {
 	//		SmartDashboard.putNumber("returnWeightedX", liftTracker.returnWeightedX());
