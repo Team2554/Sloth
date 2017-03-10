@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2554.robot;
 
 import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.MjpegServer;
 import edu.wpi.first.wpilibj.CameraServer;
 
 /**
@@ -31,7 +32,7 @@ public class RobotMap {
 	final public static int lights = 0;
 	
 	//Camera
-	public static CvSource danxKelly = CameraServer.getInstance().putVideo("DanxKelly", 640, 480);
+	//public static MjpegServer outputServer= new MjpegServer("serve_camera", 1181);
 	
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.

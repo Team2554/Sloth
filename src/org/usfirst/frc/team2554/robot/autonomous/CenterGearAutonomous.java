@@ -22,12 +22,18 @@ public class CenterGearAutonomous extends Command {
     protected void initialize() {
     	timer.reset();
     	timer.start();
-    	myRobot.drive(0, 0);
-    	myRobot.drive(0.5, 0);
+//    	myRobot.drive(0, 0);
+		myRobot.mecanumDrive_Cartesian(0, -0.6, 0, 0);
     }
-
+    public void start(){
+    	timer.reset();
+    	timer.start();
+    	myRobot.mecanumDrive_Cartesian(0, -0.6, 0, 0);
+    }
+  
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+		myRobot.mecanumDrive_Cartesian(0, -0.6, 0, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -38,14 +44,14 @@ public class CenterGearAutonomous extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	myRobot.drive(0,0);
+		myRobot.mecanumDrive_Cartesian(0, 0, 0, 0);
     	timer.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	myRobot.drive(0,0);
+		myRobot.mecanumDrive_Cartesian(0, 0, 0, 0);
     	timer.stop();
     }
 }

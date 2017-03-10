@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj.CameraServer;
  *
  */
 public class Camera extends Subsystem {
-	//public Camera(){}
-	private UsbCamera gearCam;
+	public Camera(){}
+	/*private UsbCamera gearCam;
 	private UsbCamera climberCam ;
-	private MjpegServer outputServer;
+
 	private boolean isGearCam;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -29,15 +29,15 @@ public class Camera extends Subsystem {
     public Camera(){
     	gearCam  = new UsbCamera("cam2", 3);
     	climberCam= new UsbCamera("cam0", 2);
-    	outputServer = new MjpegServer("serve_camera", 1181);
     	setUpCamera();
-    	outputServer.setSource(gearCam);
+    	RobotMap.outputServer.setSource(gearCam);
     	isGearCam = true;
     }
     public void setUpCamera(){
     	gearCam.setResolution(640, 480);
     	climberCam.setResolution(640, 480);
-    	gearCam.setBrightness(50);
+    	gearCam.setBrightness(100);
+    	climberCam.setBrightness(100);
     	gearCam.setExposureManual(0);
     	climberCam.setBrightness(50);
     	climberCam.setExposureManual(0);
@@ -45,11 +45,11 @@ public class Camera extends Subsystem {
     public void switchCam(){
 	   isGearCam = !isGearCam;
 		if(isGearCam)
-   			outputServer.setSource(gearCam);
+   			RobotMap.outputServer.setSource(gearCam);
 		else
-    		outputServer.setSource(climberCam);
+    		RobotMap.outputServer.setSource(climberCam);
     }
-    
+    */
 
-//	protected void initDefaultCommand(){}
+	protected void initDefaultCommand(){}
 }
