@@ -18,7 +18,7 @@ public class SwitchCamera extends InstantCommand {
 
     // Called once when the command executes
     protected void initialize() {
-  //	Robot.camera.switchCam();
+    	Robot.camera.switchCam();
     }
 
 }

@@ -10,19 +10,20 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class CenterGearAutonomous extends Command {
-	//RobotDrive myRobot = new RobotDrive(RobotMap.driveTrain[0], RobotMap.driveTrain[1], RobotMap.driveTrain[2], RobotMap.driveTrain[3]);
-    Timer timer = new Timer();
-    public CenterGearAutonomous() {
+	RobotDrive myRobot;
+	Timer timer = new Timer();
+    public CenterGearAutonomous(RobotDrive robot) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	myRobot = robot;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	timer.reset();
     	timer.start();
-    //	myRobot.drive(0, 0);
-    //	myRobot.drive(0.5, 0);
+    	myRobot.drive(0, 0);
+    	myRobot.drive(0.5, 0);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -37,14 +38,14 @@ public class CenterGearAutonomous extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    //	myRobot.drive(0,0);
+    	myRobot.drive(0,0);
     	timer.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    //	myRobot.drive(0, 0);
+    	myRobot.drive(0,0);
     	timer.stop();
     }
 }
