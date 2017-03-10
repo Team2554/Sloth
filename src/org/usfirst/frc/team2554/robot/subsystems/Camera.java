@@ -43,11 +43,11 @@ public class Camera extends Subsystem {
     	climberCam.setExposureManual(0);
     }
     public void switchCam(){
-    isGearCam = !isGearCam;
-    if(isGearCam)
-    	outputServer.setSource(gearCam);
-    else
-    	outputServer.setSource(climberCam);
+	   isGearCam = !isGearCam;
+		if(isGearCam)
+   			outputServer.setSource(gearCam);
+		else
+    		outputServer.setSource(climberCam);
     }
     
 
