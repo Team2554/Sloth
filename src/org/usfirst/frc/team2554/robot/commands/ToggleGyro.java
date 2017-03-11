@@ -8,18 +8,20 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ToggleGyro extends Command {
-
-    public ToggleGyro() {
+	double myDeg;
+	
+    public ToggleGyro(int deg) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+		myDeg = deg;	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-//    	Robot.isGyroCommand = !Robot.isGyroCommand;
     }
     public void start() {
     	Robot.isGyroCommand = false;
+		Robot.gyroDegDefault = myDeg;
     }
     public void cancel() {
     	Robot.isGyroCommand = true;
