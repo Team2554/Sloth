@@ -49,7 +49,11 @@ public class Robot extends IterativeRobot {
 	public static Camera camera;
 	public static double rotationValue = 0.0;
 	public static boolean isGyroCommand = true;
+<<<<<<< HEAD
 	public static double gyroDegrees;
+=======
+	public static double gyroDegDefault;
+>>>>>>> origin/master
 	Command autonomousCommand;
 	public static double Xaxis, Yaxis, Zaxis;
 	PIDController encoderController;
@@ -81,8 +85,13 @@ public class Robot extends IterativeRobot {
 		oi.feederBackButton.whileHeld(new SpinFeederBackward());
 		//oi.turnCamButton.whenPressed(new RotateRobot());
 		oi.resetGyroButton.whenPressed(new ResetGyro());
+<<<<<<< HEAD
 //		oi.toggleGyroButton.whileHeld(new ToggleGyro());
 //		oi.climberViewButton.whileHeld(new ToggleGyroClimber());
+=======
+		oi.toggleGyroButton.whileHeld(new ToggleGyro(90));
+		oi.climbingViewButton.whileHeld(new ToggleGyro(270));
+>>>>>>> origin/master
 		adjustShooterConditional = new AdjustShootingConditional(new AdjustShootingGroup());
 		// Tune numbers
 		// output = new Victor(0);
