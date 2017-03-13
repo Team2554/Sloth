@@ -10,3 +10,4 @@ dist/
 .project
 .travis.yml
 sysProps.xml
+.project
