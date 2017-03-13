@@ -3,6 +3,6 @@
 Sloth.iml
 build.xml
 build.properties
-/build/
+build/
 .class
 .jar
