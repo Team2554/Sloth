@@ -6,3 +6,7 @@ build.properties
 build/
 .class
 .jar
+dist/
+.project
+.travis.yml
+sysProps.xml
