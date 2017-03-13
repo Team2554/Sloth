@@ -49,11 +49,7 @@ public class Robot extends IterativeRobot {
 	public static Camera camera;
 	public static double rotationValue = 0.0;
 	public static boolean isGyroCommand = true;
-<<<<<<< HEAD
-	public static double gyroDegrees;
-=======
 	public static double gyroDegDefault;
->>>>>>> origin/master
 	Command autonomousCommand;
 	public static double Xaxis, Yaxis, Zaxis;
 	PIDController encoderController;
@@ -83,25 +79,10 @@ public class Robot extends IterativeRobot {
 		oi.feederTrigger.whileActive(new SpinFeederForward());
 		oi.intakeButton.whileHeld(new SpinIntake());
 		oi.feederBackButton.whileHeld(new SpinFeederBackward());
-		//oi.turnCamButton.whenPressed(new RotateRobot());
 		oi.resetGyroButton.whenPressed(new ResetGyro());
-<<<<<<< HEAD
-//		oi.toggleGyroButton.whileHeld(new ToggleGyro());
-//		oi.climberViewButton.whileHeld(new ToggleGyroClimber());
-=======
 		oi.toggleGyroButton.whileHeld(new ToggleGyro(90));
 		oi.climbingViewButton.whileHeld(new ToggleGyro(270));
->>>>>>> origin/master
 		adjustShooterConditional = new AdjustShootingConditional(new AdjustShootingGroup());
-		// Tune numbers
-		// output = new Victor(0);
-		// encoderController = new PIDController(0,0,0,shooterEncoder, output);
-		// encoderController.setPercentTolerance(15);
-		// encoderController.setContinuous(false);
-		// encoderController.setOutputRange(-1, 1);
-		// LiveWindow.addActuator("Test", "PID", encoderController);
-		// LiveWindow.addSensor("hi", "hi", shooterEncoder);
-	//	LiveWindow.addSensor("hi", "hi", gyro);
 		chooser.addDefault("Default Auto", new DefaultAutonomous(myRobot));
 		chooser.addObject("Center Gear", new CenterGearAutonomous(myRobot));
 		SmartDashboard.putData("Auto mode", chooser);
@@ -203,20 +184,7 @@ public class Robot extends IterativeRobot {
 		else
 			Zaxis = 0.0;
 		//gyro-less drive is toggled on/off with button 7
-		// THIS WILL BE COMMENTED OUT BECAUSE CODE FROM THE COMMIT SPECIFIED IN ISSUE 9 REPLACES THIS
-		gyroDegrees=gyro.getAngle();
-		if( oi.joystick.getRawButton(7)) {
-			gyroDegrees = 270.0;
-		}
-		if (oi.joystick.getRawButton(1)){
-			gyroDegrees = 90.0;
-		}
-		drive( oi.getRawAxis(0), oi.getRawAxis(1), oi.getRawAxis(2), multiplier, gyroDegrees);
-
-	/*	if(liftTracker.isCentered())
-			lights.set(Relay.Value.kOn);
-		else
-			lights.set(Relay.Value.kOff);*/
+		drive( oi.getRawAxis(0), oi.getRawAxis(1), oi.getRawAxis(2), multiplier, gyroDegDefault);
 	}
 
 	/**
