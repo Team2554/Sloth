@@ -21,7 +21,7 @@ public class ToggleGyro extends Command {
     }
     public void start() {
     	Robot.isGyroCommand = false;
-		Robot.gyroDegDefault = myDeg;
+	Robot.gyroDegDefault = myDeg;
     }
     public void cancel() {
     	Robot.isGyroCommand = true;
