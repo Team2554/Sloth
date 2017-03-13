@@ -21,8 +21,7 @@ public class OI {
 			return joystick.getRawAxis(axis);
 		}
 	//Face Buttons
-		final private int aButton = 1;
-		final public static int bButton = 2;
+		final public int aButton = 1;		
 		final public int yButton = 4;
 	//Bumpers and Triggers
 		final public int rBumper = 6;
@@ -43,9 +42,9 @@ public class OI {
 	//Buttons
 		Button climbButton = new JoystickButton(controller, aButton);
 		Button intakeButton = new JoystickButton(controller, rBumper);
-		//Button switchCamButton = new JoystickButton(joystick, triggerButton);
 		Button feederBackButton = new JoystickButton(controller, lBumper);
 		Button turnCamButton = new JoystickButton(controller, yButton);
+		Button climberViewButton = new JoystickButton(controller, sideButton7);
 		Button resetGyroButton = new JoystickButton(joystick, sideButton11);
 		Button toggleGyroButton = new JoystickButton(joystick, triggerButton);
 	//Triggers

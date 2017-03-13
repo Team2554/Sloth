@@ -27,9 +27,9 @@ public class RotateRobot extends Command {
     	double pos = 0;//Robot.liftTracker.returnWeightedX();
     	
     	if(pos > center)
-    		Robot.rotationValue = 0.5;
+    		Robot.rotationValue = 0.4;
     	else if(pos < center)
-    		Robot.rotationValue = -0.5;
+    		Robot.rotationValue = -0.4;
     	else
     		Robot.rotationValue = 0;
     }

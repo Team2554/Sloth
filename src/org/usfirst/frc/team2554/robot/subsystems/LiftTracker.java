@@ -9,8 +9,13 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;;
  *
  */
 public class LiftTracker extends Subsystem {
-	NetworkTable gripTable = Robot.gripTable;
-	private double[] x, y, area, defaultArray = new double[0];
+
+	@Override
+	protected void initDefaultCommand() {
+		// TODO Auto-generated method stub
+		
+	}
+/*	private double[] x, y, area, defaultArray = new double[0];
 	//Check if 0 or 320
 	private double center = 320;
 	// Put methods for controlling this subsystem
@@ -20,11 +25,10 @@ public class LiftTracker extends Subsystem {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 	}
-/*
 	public void updateTable() {
-		x = gripTable.getNumberArray("centerX", defaultArray);
-		y = gripTable.getNumberArray("centerY", defaultArray);
-		area = gripTable.getNumberArray("area", defaultArray);
+		x = Robot.gripTable.getNumberArray("centerX", defaultArray);
+		y = Robot.gripTable.getNumberArray("centerY", defaultArray);
+		area = Robot.gripTable.getNumberArray("area", defaultArray);
 	}
 
 	public double[] returnX() {

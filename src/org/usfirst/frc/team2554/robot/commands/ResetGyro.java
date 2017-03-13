@@ -8,11 +8,13 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
  *
  */
 public class ResetGyro extends InstantCommand {
-
-    public ResetGyro() {
+//	double degrees;
+	
+    public ResetGyro(/*double deg*/) {
         super();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+//        degrees = deg;
     }
 
     // Called once when the command executes

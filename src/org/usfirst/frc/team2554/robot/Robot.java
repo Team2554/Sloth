@@ -49,6 +49,7 @@ public class Robot extends IterativeRobot {
 	public static Camera camera;
 	public static double rotationValue = 0.0;
 	public static boolean isGyroCommand = true;
+	public static double gyroDegrees;
 	Command autonomousCommand;
 	public static double Xaxis, Yaxis, Zaxis;
 	PIDController encoderController;
@@ -78,9 +79,10 @@ public class Robot extends IterativeRobot {
 		oi.feederTrigger.whileActive(new SpinFeederForward());
 		oi.intakeButton.whileHeld(new SpinIntake());
 		oi.feederBackButton.whileHeld(new SpinFeederBackward());
-		oi.turnCamButton.whenPressed(new RotateRobot());
+		//oi.turnCamButton.whenPressed(new RotateRobot());
 		oi.resetGyroButton.whenPressed(new ResetGyro());
-		oi.toggleGyroButton.whileHeld(new ToggleGyro());
+//		oi.toggleGyroButton.whileHeld(new ToggleGyro());
+//		oi.climberViewButton.whileHeld(new ToggleGyroClimber());
 		adjustShooterConditional = new AdjustShootingConditional(new AdjustShootingGroup());
 		// Tune numbers
 		// output = new Victor(0);
@@ -135,7 +137,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		gyro.calibrate();
 	//	autonomousCommand = chooser.getSelected();
-		timer.start();
+		timer.start(); 
 
 		//timer.delay(5.0);
 		//myRobot.mecanumDrive_Cartesian(0, 0, 0, 0);
@@ -149,8 +151,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		if(timer.get() < 3)
-			myRobot.mecanumDrive_Cartesian(0, -0.6, 0, 0);
+		if(timer.get() < 4)
+			myRobot.mecanumDrive_Cartesian(-0.5, 0.0, 0, 0);
 		else
 			myRobot.mecanumDrive_Cartesian(0, 0, 0, 0);
 	}
@@ -162,7 +164,6 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		gyro.calibrate();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		myRobot.setSafetyEnabled(false);
@@ -193,8 +194,16 @@ public class Robot extends IterativeRobot {
 		else
 			Zaxis = 0.0;
 		//gyro-less drive is toggled on/off with button 7
-		drive( oi.getRawAxis(0), oi.getRawAxis(1), oi.getRawAxis(2), multiplier);
-//		drive( oi.getRawAxis(0), oi.getRawAxis(1), oi.getRawAxis(2), multiplier, !oi.joystick.getRawButton(1));
+		// THIS WILL BE COMMENTED OUT BECAUSE CODE FROM THE COMMIT SPECIFIED IN ISSUE 9 REPLACES THIS
+		gyroDegrees=gyro.getAngle();
+		if( oi.joystick.getRawButton(7)) {
+			gyroDegrees = 270.0;
+		}
+		if (oi.joystick.getRawButton(1)){
+			gyroDegrees = 90.0;
+		}
+		drive( oi.getRawAxis(0), oi.getRawAxis(1), oi.getRawAxis(2), multiplier, gyroDegrees);
+
 	/*	if(liftTracker.isCentered())
 			lights.set(Relay.Value.kOn);
 		else
@@ -233,10 +242,12 @@ public class Robot extends IterativeRobot {
 			myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, 0);
 	}
 	
-	public void drive(double x, double y, double rotation, double multiplier) {
-		if( isGyroCommand )
-			myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, gyro.getAngle());
-		else
-			myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, 90);
+	public void drive(double x, double y, double rotation, double multiplier, double gyroDeg) {
+//		if( isGyroCommand )
+//			myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, gyro.getAngle());
+//		else
+//			myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, gyroDegrees);
+		myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, gyroDeg);
+
 	}
 }
