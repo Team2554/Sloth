@@ -66,13 +66,16 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		// DRIVETRAIN
+		myRobot = new RobotDrive(RobotMap.driveTrain[0], RobotMap.driveTrain[1], RobotMap.driveTrain[2], RobotMap.driveTrain[3]);
+
+		// CAMERAS
 		CameraServer.getInstance().startAutomaticCapture(0);
 		CameraServer.getInstance().startAutomaticCapture(1);
-		myRobot = new RobotDrive(RobotMap.driveTrain[0], RobotMap.driveTrain[1], RobotMap.driveTrain[2],
-				RobotMap.driveTrain[3]);
 		oi = new OI();
 		gripTable = NetworkTable.getTable("GRIP/myContoursReport");
 		camera = new Camera();
+
 		// BUTTONS
 		oi.climbButton.whileHeld(new ClimbUp());
 		oi.shootingTrigger.whileActive(new SpinShooter());
@@ -83,15 +86,14 @@ public class Robot extends IterativeRobot {
 		oi.toggleGyroButton.whileHeld(new ToggleGyro(90));
 		oi.climbingViewButton.whileHeld(new ToggleGyro(270));
 		adjustShooterConditional = new AdjustShootingConditional(new AdjustShootingGroup());
+
+		//COMMAND INITIALIZATION
 		chooser.addDefault("Default Auto", new DefaultAutonomous(myRobot));
 		chooser.addObject("Center Gear", new CenterGearAutonomous(myRobot));
 		SmartDashboard.putData("Auto mode", chooser);
-		try {
-	//		SmartDashboard.putNumber("returnWeightedX", liftTracker.returnWeightedX());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		SmartDashboard.putBoolean("Is Gyro On", isGyroCommand);
+		autonomousCommand = chooser.getSelected();
+
 		// CHANGE Distance Value
 		shooterEncoder.setDistancePerPulse(1);
 		timer.reset();
@@ -126,14 +128,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		gyro.calibrate();
-	//	autonomousCommand = chooser.getSelected();
 		timer.start(); 
 
-		//timer.delay(5.0);
-		//myRobot.mecanumDrive_Cartesian(0, 0, 0, 0);
 		// schedule the autonomous command (example)
-		//if (autonomousCommand != null)
-			//autonomousCommand.start();
+		if (autonomousCommand != null)
+			autonomousCommand.start();
 	}
 
 	/**
@@ -141,10 +140,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		if(timer.get() < 4)
-			myRobot.mecanumDrive_Cartesian(-0.5, 0.0, 0, 0);
-		else
-			myRobot.mecanumDrive_Cartesian(0, 0, 0, 0);
+		Scheduler.getInstance().run();
 	}
 
 	@Override
@@ -160,8 +156,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
-	 * 
-	 * 
 	 * This function is called periodically during operator control
 	 */
 	@Override
@@ -183,7 +177,7 @@ public class Robot extends IterativeRobot {
 			Zaxis = oi.getRawAxis(2);
 		else
 			Zaxis = 0.0;
-		//gyro-less drive is toggled on/off with button 7
+		//gyro-less drive is toggled on/off with button 7 and button 11
 		drive( oi.getRawAxis(0), oi.getRawAxis(1), oi.getRawAxis(2), multiplier, gyroDegDefault);
 	}
 
@@ -209,21 +203,7 @@ public class Robot extends IterativeRobot {
 		return 0;
 	}
 
-	/**
-	 * @deprecated used for hold button 7 for gyro-less
-	 */
-	public void drive(double x, double y, double rotation, double multiplier, boolean isGyro) {
-		if( isGyro )
-			myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, gyro.getAngle());
-		else
-			myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, 0);
-	}
-	
 	public void drive(double x, double y, double rotation, double multiplier, double gyroDeg) {
-//		if( isGyroCommand )
-//			myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, gyro.getAngle());
-//		else
-//			myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, gyroDegrees);
 		myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, gyroDeg);
 
 	}
