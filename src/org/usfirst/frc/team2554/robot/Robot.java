@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj.CameraServer;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
+//this is a test commit
 public class Robot extends IterativeRobot {
 	public double averageXaxisMag, averageYaxisMag, averageZaxisMag;
 	public static final double DEADZONE = 0.15;
