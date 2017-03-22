@@ -8,11 +8,13 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ClimbUp extends Command {
+	double speed;
 
-    public ClimbUp() {
+    public ClimbUp(double mySpeed) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.climber);
+    	speed = mySpeed;
     }
 
     // Called just before this Command runs the first time
@@ -25,7 +27,7 @@ public class ClimbUp extends Command {
     }
     
     public void start() {
-    	Robot.climber.climb();
+    	Robot.climber.climb(speed);
     	//inb4 "broke the code"
     	//this is how you're supposed to use whileheld(), kevin
     }

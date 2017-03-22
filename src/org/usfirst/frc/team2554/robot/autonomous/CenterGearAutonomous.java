@@ -1,7 +1,5 @@
 package org.usfirst.frc.team2554.robot.autonomous;
 
-import org.usfirst.frc.team2554.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;

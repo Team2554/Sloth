@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team2554.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -37,11 +36,7 @@ public class Robot extends IterativeRobot {
 	public static double multiplier;
 	public static OI oi;
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
-	public static Feeder feeder = new Feeder();
-	public static Shooter shooter = new Shooter();
-	public static Intake intake = new Intake();
 	public static Climber climber = new Climber();
-	public static DigitalInput feederSwitch = new DigitalInput(RobotMap.limitSwitchFeeder);
 	public static Relay lights = new Relay(RobotMap.lights);
 	public static Encoder shooterEncoder = new Encoder(RobotMap.shooterEncoderA, RobotMap.shooterEncoderB);
 	public static LiftTracker liftTracker = new LiftTracker();
@@ -74,23 +69,14 @@ public class Robot extends IterativeRobot {
 		gripTable = NetworkTable.getTable("GRIP/myContoursReport");
 		camera = new Camera();
 		// BUTTONS
-		oi.climbButton.whileHeld(new ClimbUp());
-		oi.shootingTrigger.whileActive(new SpinShooter());
-		oi.feederTrigger.whileActive(new SpinFeederForward());
-		oi.intakeButton.whileHeld(new SpinIntake());
-		oi.feederBackButton.whileHeld(new SpinFeederBackward());
+		oi.climbButton.whileHeld(new ClimbUp(1.0));
+		oi.slowClimbButton.whileHeld(new ClimbUp(0.5));
 		oi.resetGyroButton.whenPressed(new ResetGyro());
 		oi.toggleGyroButton.whileHeld(new ToggleGyro(90));
 		oi.climbingViewButton.whileHeld(new ToggleGyro(270));
-		adjustShooterConditional = new AdjustShootingConditional(new AdjustShootingGroup());
 		chooser.addDefault("Default Auto", new DefaultAutonomous(myRobot));
 		chooser.addObject("Center Gear", new CenterGearAutonomous(myRobot));
 		SmartDashboard.putData("Auto mode", chooser);
-		try {
-	//		SmartDashboard.putNumber("returnWeightedX", liftTracker.returnWeightedX());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		SmartDashboard.putBoolean("Is Gyro On", isGyroCommand);
 		// CHANGE Distance Value
 		shooterEncoder.setDistancePerPulse(1);
@@ -220,10 +206,6 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void drive(double x, double y, double rotation, double multiplier, double gyroDeg) {
-//		if( isGyroCommand )
-//			myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, gyro.getAngle());
-//		else
-//			myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, gyroDegrees);
 		myRobot.mecanumDrive_Cartesian(x * multiplier, y * multiplier, rotation * multiplier, gyroDeg);
 
 	}

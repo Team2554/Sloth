@@ -18,8 +18,8 @@ public class Climber extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-	public void climb(){
-    	climber.set(1.0);
+	public void climb(double speed){
+    	climber.set(speed);
     }
 	public void stop(){
 		climber.set(0);

@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.buttons.Trigger;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	
 	//Controller Ports
 		public Joystick controller = new Joystick(0);
 		public Joystick joystick = new Joystick(1);
@@ -22,6 +21,7 @@ public class OI {
 		}
 	//Face Buttons
 		final public int aButton = 1;		
+		final public int bButton = 2;
 		final public int yButton = 4;
 	//Bumpers and Triggers
 		final public int rBumper = 6;
@@ -41,8 +41,7 @@ public class OI {
 		final public int stickRightY = 5;
 	//Buttons
 		Button climbButton = new JoystickButton(controller, aButton);
-		Button intakeButton = new JoystickButton(controller, rBumper);
-		Button feederBackButton = new JoystickButton(controller, lBumper);
+		Button slowClimbButton = new JoystickButton(controller, bButton);
 		Button turnCamButton = new JoystickButton(controller, yButton);
 		Button climberViewButton = new JoystickButton(controller, sideButton7);
 		Button resetGyroButton = new JoystickButton(joystick, sideButton11);
